@@ -26,7 +26,7 @@ But I want to approach the project virtually "from scratch", without using the H
 
 Because of this goal, I won't be using the wheelchair base, either, because most people probably can't easily get ahold of one, plus it's more expensive to implement (the batteries alone cost over $120.00 USD). But the underlying concepts and everything else could certainly be used with such a base, if you have one.
 
-In fact, while I show how to build a base, there's nothing that says you couldn't use, for instance, a version of the [Toy RC Car Robot Platform](../toy-rc-car-robot-platform) for the project. This robot doesn't have to carry anything, it could simply be built to follow you around...like a lost puppy.
+In fact, while I show how to build a base, there's nothing that says you couldn't use, for instance, a version of the [Toy RC Car Robot Platform](https://github.com/junkbotix/toy-rc-car-robot-platform) for the project. This robot doesn't have to carry anything, it could simply be built to follow you around...like a lost puppy.
 
 <br>
 
