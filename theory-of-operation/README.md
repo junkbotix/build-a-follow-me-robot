@@ -1,8 +1,8 @@
-![Junkbotix Banner](https://raw.githubusercontent.com/junkbotix/build-a-follow-me-robot/main/images/banner-1024px.jpg)
+![Junkbotix Banner](../images/banner-1024px.jpg)
 
 # Build a "Follow-Me" Robot
 
-![Introduction](./images/theory-720px.jpg)
+![Introduction](../images/theory-720px.jpg)
 
 Check out the latest on this project and tutorial at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
