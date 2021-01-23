@@ -30,7 +30,7 @@ In fact, while I show how to build a base, there's nothing that says you couldn'
 
 <br>
 
-Basically, the method to implement such a robot, at the basic level, is fairly simple:
+The method to implement such a robot, at the basic level, is fairly simple:
 
 1. The user of the robot carries a means to identify her current location.
 2. The robot also carries a means to identify its location.
