@@ -2,7 +2,7 @@
 
 # Build a "Follow-Me" Robot
 
-![Introduction](./images/motors-and-batteries-720px.jpg)
+![Introduction](./images/chassis-drive-motors-720px.jpg)
 
 Check out the latest on this project and tutorial at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -12,6 +12,9 @@ Check out the latest on this project and tutorial at the [Junkbotix Channel](htt
 
 * [Part 1 - Theory of Operation](./theory-of-operation)
 * [Part 2 - Selecting Your Motors and Batteries](./motors-and-batteries)
+* [Part 3 - Controlling Your Motors](./motor-control)
+* Chassis Assembly
+  * [Part 4 - Drive Motors](./chassis-assembly/drive-motors)
 
 <br>
 
