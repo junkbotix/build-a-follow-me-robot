@@ -2,7 +2,7 @@
 
 <br>
 
-[![Part 6](./chassis-assembly/frame/images/motor-mount-brackets-720px.jpg)]()
+[![Part 6](./chassis-assembly/frame/images/motor-mount-brackets-720px.jpg)](https://www.youtube.com/watch?v=DKjOhdwGVQc)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
