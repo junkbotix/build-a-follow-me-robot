@@ -2,7 +2,7 @@
 
 <br>
 
-[![Part 6](./chassis-assembly/frame/images/motor-mount-brackets-720px.jpg)](https://www.youtube.com/watch?v=DKjOhdwGVQc)
+[![Part 7](./chassis-assembly/motor-mounting/images/motor-mounting-720px.jpg)](https://www.youtube.com/watch?v=-lXxRHiNbhw)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -17,4 +17,6 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
 * Chassis Assembly
   * [Part 4 - Drive Motors (and Wheels)](./chassis-assembly/drive-motors)
   * [Part 5 - Frame and Deck](./chassis-assembly/frame)
-  * [Part 6 - Motor Mount Brackets](./chassis-assembly/frame)
+  * [Part 6 & 7 - Motor Mounting](./chassis-assembly/motor-mounting)
+  * [Part 8 - Caster Wheels](./chassis-assembly/caster-wheels)
+  * [Completed Chassis](./chassis-assembly/completed)
