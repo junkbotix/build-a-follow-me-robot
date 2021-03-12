@@ -2,7 +2,7 @@
 
 <br>
 
-[![Part 7](./chassis-assembly/motor-mounting/images/motor-mounting-720px.jpg)](https://www.youtube.com/watch?v=-lXxRHiNbhw)
+[![Part 8](./chassis-assembly/caster-wheels/images/caster-wheels-720px.jpg)](https://www.youtube.com/watch?v=TpHtpjgv2SM)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
