@@ -39,6 +39,6 @@ I used a piece of wood I had, that was 3/4 inches thick, so I needed to make a s
 
 <br>
 
-As you can see, the carriage bolts were thread thru the rivnuts on the frame. The wood platform also looks like it could be used to support additional sensors...
+As you can see, the carriage bolts were threaded through the rivnuts on the frame. The wood platform also looks like it could be used to support additional sensors...
 
 In the future, though, I might just switch these casters out with some larger ones, if I happen upon any.
