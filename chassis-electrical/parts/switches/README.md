@@ -2,7 +2,7 @@
 
 <br>
 
-<img src="./images/large-switch-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/small-switch-720px.jpg" width="49%" />
+<img src="./images/large-switch-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/small-switch-720px.jpg" width="49%" />
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -48,7 +48,7 @@ The large holes on the right and left are for the large switches (the smaller ho
 
 After mounting and a bit of wiring, they look like this:
 
-<img src="./images/inside-enclosure-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/int-ext-view-720px.jpg" width="49%" />
+<img src="./images/inside-enclosure-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/int-ext-view-720px.jpg" width="49%" />
 
 <br>
 

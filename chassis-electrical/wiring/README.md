@@ -2,7 +2,7 @@
 
 <br>
 
-<img src="./images/parts-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/completed-enclosure-720px.jpg" width="49%" />
+<img src="./images/parts-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/completed-enclosure-720px.jpg" width="49%" />
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -24,11 +24,11 @@ Could it have been planned out first? Maybe. But I honestly think if I had tried
 
 Wires, switches, parts, tools, and more...ohhh, my!
 
-<img src="./images/parts-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/breaker-fuses-battery-720px.jpg" width="49%" />
+<img src="./images/parts-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/breaker-fuses-battery-720px.jpg" width="49%" />
 
-<img src="./images/fuses-holder-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/cable-glands-720px.jpg" width="49%" />
+<img src="./images/fuses-holder-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/cable-glands-720px.jpg" width="49%" />
 
-<img src="./images/indicators-wired-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/large-switch-720px.jpg" width="49%" />
+<img src="./images/indicators-wired-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/large-switch-720px.jpg" width="49%" />
 
 <br>
 
@@ -46,7 +46,7 @@ I had the design and layout ready...it was going to look something like this:
 
 Before I get into that, let's look at the wire that will be used:
 
-<img src="./images/22awg-wire-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/16awg-wire-720px.jpg" width="49%" />
+<img src="./images/22awg-wire-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/16awg-wire-720px.jpg" width="49%" />
 
 At the small end of the scale, I'll be using both 22 gauge (AWG) wire (left), and 16 gauge wire (right). This wire will mainly be used for the lower current hookups.
 
@@ -70,7 +70,7 @@ So, the first thing to do was to wire the battery to the breaker, and the breake
 
 Then the wires were hooked up to the appropriate parts:
 
-<img src="./images/main-breaker-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/fuse-holder-wiring-720px.jpg" width="49%" />
+<img src="./images/main-breaker-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/fuse-holder-wiring-720px.jpg" width="49%" />
 
 ![Power Wiring](./images/main-breaker-wiring-720px.jpg)
 
@@ -90,29 +90,29 @@ These were originally extension cables, but I removed the sheath off the male en
 
 Next was to wire up the enclosure, and then add it to the panel. First I had to wire up the indicators, made from various LEDs:
 
-<img src="./images/leds-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/indicators-wired-720px.jpg" width="49%" />
+<img src="./images/leds-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/indicators-wired-720px.jpg" width="49%" />
 
 <br>
 
 Once those were done, the large switch indicators were mounted into the drilled enclosure, and the small switches were then wired up:
 
-<img src="./images/small-switch-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/small-switches-hookup-720px.jpg" width="49%" />
+<img src="./images/small-switch-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/small-switches-hookup-720px.jpg" width="49%" />
 
 <br>
 
 Then the large switches and the remaining indicators could be put into place:
 
-<img src="./images/large-switch-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/inside-enclosure-720px.jpg" width="49%" />
+<img src="./images/large-switch-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/inside-enclosure-720px.jpg" width="49%" />
 
 <br>
 
 ...and OMG:
 
-<img src="./images/outside-enclosure-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/interior-mess-1-720px.jpg" width="49%" />
+<img src="./images/outside-enclosure-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/interior-mess-1-720px.jpg" width="49%" />
 
-<img src="./images/interior-mess-2-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/int-ext-view-720px.jpg" width="49%" />
+<img src="./images/interior-mess-2-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/int-ext-view-720px.jpg" width="49%" />
 
-<img src="./images/fuse-block-connections-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/motor-controller-connections-720px.jpg" width="49%" />
+<img src="./images/fuse-block-connections-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/motor-controller-connections-720px.jpg" width="49%" />
 
 <br>
 
@@ -120,7 +120,7 @@ But we end up with something beautiful, as long as we don't look at that other s
 
 ![Completed Enclosure](./images/completed-enclosure-720px.jpg)
 
-<img src="./images/complete-system-1-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/complete-system-2-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/complete-system-3-720px.jpg" width="32%" />
+<img src="./images/complete-system-1-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/complete-system-2-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/complete-system-3-720px.jpg" width="32%" />
 
 <br>
 

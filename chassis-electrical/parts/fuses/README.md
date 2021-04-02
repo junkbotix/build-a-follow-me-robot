@@ -49,7 +49,7 @@ You can see in the image below how I feed the fuse block from the breaker, and t
 
 This is done just using simple crimped 1/4" connectors, which slip (very tightly) over the terminals of the fuse block (underneath):
 
-<img src="./images/fuse-holder-bottom-1-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/fuse-holder-bottom-2-720px.jpg" width="49%" />
+<img src="./images/fuse-holder-bottom-1-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/fuse-holder-bottom-2-720px.jpg" width="49%" />
 
 <br>
 

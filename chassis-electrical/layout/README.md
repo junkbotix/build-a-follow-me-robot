@@ -10,7 +10,7 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
 
 ## My Initial Layout
 
-<img src="./images/panel-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/battery-placement-720px.jpg" width="49%" />
+<img src="./images/panel-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/battery-placement-720px.jpg" width="49%" />
 
 The idea for the layout of my electrical system, that I always kept in mind as I built my chassis, can be seen in the above images.
 
@@ -22,7 +22,7 @@ The breaker would act as both a whole-system overload check, and also as a "main
 
 Each fuse would supply power via wires to the interior of the electronics enclosure above the fuse block and breaker, via a hole in the left side of the enclosure.
 
-<img src="./images/enclosure-side-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/enclosure-top-720px.jpg" width="49%" />
+<img src="./images/enclosure-side-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/enclosure-top-720px.jpg" width="49%" />
 
 Power would be controlled by switches mounted on the upper "side" of the enclosure, along with various indicator LEDs to show the status of the fuses, and which switches were "on", giving a handy visual indicator of the system's power distribution and status.
 

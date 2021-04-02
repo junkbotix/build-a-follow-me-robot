@@ -2,7 +2,7 @@
 
 <br>
 
-<img src="./images/panel-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/drawing-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/panel-layout-720px.jpg" width="32%" />
+<img src="./images/panel-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/drawing-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/panel-layout-720px.jpg" width="32%" />
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -30,4 +30,4 @@ Please see the section on [wiring](../../wiring) for more details...
 
 ## Final Results
 
-<img src="./images/complete-system-1-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/complete-system-2-720px.jpg" width="49%" />
+<img src="./images/complete-system-1-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/complete-system-2-720px.jpg" width="49%" />

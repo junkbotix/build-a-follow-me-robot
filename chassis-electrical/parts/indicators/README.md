@@ -2,7 +2,7 @@
 
 <br>
 
-<img src="./images/indicators-layout-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/drilled-panel-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/leds-720px.jpg" width="32%" />
+<img src="./images/indicators-layout-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/drilled-panel-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/leds-720px.jpg" width="32%" />
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -30,7 +30,7 @@ Using [this calculator](https://ohmslawcalculator.com/led-resistor-calculator) a
 
 The other leg of the resistor was connected to the appropriate voltage, after the switch or after the fuses, depending on the indicator type:
 
-<img src="./images/inside-enclosure-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/outside-enclosure-720px.jpg" width="49%" />
+<img src="./images/inside-enclosure-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/outside-enclosure-720px.jpg" width="49%" />
 
 <br>
 

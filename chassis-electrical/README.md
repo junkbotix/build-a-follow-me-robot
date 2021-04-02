@@ -8,7 +8,7 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
 
 <br>
 
-<img src="./images/parts-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/completed-720px.jpg" width="49%" />
+<img src="./images/parts-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/completed-720px.jpg" width="49%" />
 
 <br>
 

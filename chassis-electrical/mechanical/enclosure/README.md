@@ -21,7 +21,7 @@ In addition to these, it also helps to centralize a bunch of the wiring for the 
 
 The enclosure is based around this ABS plastic flanged enclosure, that I believe I picked up surplus at a hamfest years ago:
 
-<img src="./images/enclosure-side-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/enclosure-top-720px.jpg" width="49%" />
+<img src="./images/enclosure-side-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/enclosure-top-720px.jpg" width="49%" />
 
 <br>
 
@@ -35,7 +35,7 @@ With this enclosure in mind, I came up with the following rough drawing of how t
 
 From this, I created a set of 1:1 drilling templates using 4-squares-per-inch (1/4") graph paper for the control layout:
 
-<img src="./images/enclosure-layouts-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/layout-gp-720px.jpg" width="49%" />
+<img src="./images/enclosure-layouts-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/layout-gp-720px.jpg" width="49%" />
 
 <br>
 
@@ -85,13 +85,13 @@ Then I repeated the process for the other side. Ultimately, I found I couldn't u
 
 I then worked on the control panel area, using the switches:
 
-<img src="./images/large-switch-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/small-switch-720px.jpg" width="49%" />
+<img src="./images/large-switch-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/small-switch-720px.jpg" width="49%" />
 
 <br>
 
 ...and LEDs for reference fit-up as I carefully drilled the holes:
 
-<img src="./images/in-shop-drilling-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/drilled-templates-720px.jpg" width="32%" /><span style="margin-left: 15px;" /><img src="./images/drilled-panel-720px.jpg" width="32%" />
+<img src="./images/in-shop-drilling-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/drilled-templates-720px.jpg" width="32%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/drilled-panel-720px.jpg" width="32%" />
 
 <br>
 
@@ -132,7 +132,7 @@ I repeated the process with the front template, and removed it, then cleaned up 
 
 After that, it was just a matter of installing the switches and indicator LEDs:
 
-<img src="./images/inside-enclosure-720px.jpg" width="49%" /><span style="margin-left: 15px;" /><img src="./images/int-ext-view-720px.jpg" width="49%" />
+<img src="./images/inside-enclosure-720px.jpg" width="49%" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/int-ext-view-720px.jpg" width="49%" />
 
 <br>
 
