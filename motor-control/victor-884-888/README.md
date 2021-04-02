@@ -14,3 +14,9 @@ The Victor-884 and 888 controllers are closer to ruggedized RC ESC controllers, 
 * [VexPro Victor-888 User Manual](./manuals/VexPro-Victor-888-User-Manual.pdf)
 
 Like the Jaguar controllers, these are now discontinued, but can also be found sold on the secondary market.
+
+<br>
+
+## More Information
+
+More information about these controllers can be found at [the FIRSTwiki](https://firstwiki.github.io/wiki/victor-884).

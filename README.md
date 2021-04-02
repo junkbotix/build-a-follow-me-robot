@@ -2,7 +2,9 @@
 
 <br>
 
-[![Part 8](./chassis-assembly/caster-wheels/images/caster-wheels-720px.jpg)](https://www.youtube.com/watch?v=TpHtpjgv2SM)
+## On YouTube
+
+[![Part 9](./chassis-electrical/images/chassis-electrical-720px.jpg)](https://www.youtube.com/watch?v=LijISf1I_SE)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -20,3 +22,17 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
   * [Part 6 & 7 - Motor Mounting](./chassis-assembly/motor-mounting)
   * [Part 8 - Caster Wheels](./chassis-assembly/caster-wheels)
   * [Completed Chassis](./chassis-assembly/completed)
+* [Part 9 - Chassis Electrical](./chassis-electrical)
+  * [Layout](./chassis-electrical/layout)
+  * [Parts](./chassis-electrical/parts)
+    * [Battery](./chassis-electrical/parts/battery)
+    * [Breaker and Fuses](./chassis-electrical/parts/fuses)
+    * [Switches](./chassis-electrical/parts/switches)
+    * [Indicators](./chassis-electrical/parts/indicators)
+    * [Motor Controllers](./chassis-electrical/parts/motor-controllers)
+  * [Mechanical](./chassis-electrical/mechanical)
+    * [Panel](./chassis-electrical/mechanical/panel)
+    * [Enclosure](./chassis-electrical/mechanical/enclosure)
+    * [Beacon Pole](./chassis-electrical/mechanical/beacon-pole)
+    * [Battery Strap](./chassis-electrical/mechanical/battery-strap)
+  * [Wiring](./chassis-electrical/wiring)
