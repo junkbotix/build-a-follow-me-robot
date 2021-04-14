@@ -1,0 +1,64 @@
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+NMEA Strings (RMC = recommended minimum sentence)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+See also: 
+
+   https://w3.cs.jmu.edu/bernstdh/web/common/help/nmea-sentences.php
+   https://wiki.openstreetmap.org/wiki/NMEA
+   https://www.windmill.co.uk/garmin.html
+
+Example data string: 	
+
+   $GPRMC,hhmmss,A,llll.ll,N,yyyyy.yy,W,kk.k,tt.t,ddmmyy,mm.m,W*CS
+
+   Where:
+
+      $GPRMC,        ($GP, message type)
+      hhmmss,        (UTC time)
+      A,             (position status, A=valid, V=invalid)
+      lllll.ll,N,    (latitude and compass direction)
+      yyyyy.yy,W,    (longitude and compass direction)
+      kk.k,          (speed in knots-per-hour)
+      tt.t,          (heading)
+      mm.m,W*        (magnetic variation and compass direction)
+      CS             (checksum validation in hex)
+
+Data format: 	ASCII
+
+Example parsing to extract latitude: 	
+
+   Search for "$GPRMC"
+   Ignore 10 characters
+   Extract Until comma
+
+Example parsing to extract longitude: 	
+
+   Search for "N,"
+   Extract Until comma
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Conversion of NMEA-RMC lat/lon to Google Map format
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+See:
+
+    https://stackoverflow.com/questions/12263599/nmea-gps-sentence-to-a-map-location
+
+It is in ddmm.mmmm format for latitude and in dddmm.mmmm for longitude
+
+to convert it into dd.dddd format you will need to do
+
+dd + mm.mmmm/60 for latitude
+ddd + mm.mmmm/60 for longitude
+
+in your case
+
+4916.45,N,12311.12,W
+
+will be
+
+49 + (16.45/60) = 49.2741 N
+123 + (11.12/60) = 123.1853 W
+
+simply put (49.2741 N 123.1853 W) on google maps to see the location

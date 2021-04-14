@@ -1,0 +1,65 @@
+Pin #   Pin Function
+-----   ------------------------------------------------------------------------
+    1   3.3V Output (low current, < 300 mA?)
+    2   RESET, EN
+-----   ------------------------------------------------------------------------
+*****   The following pins are "input only" (* no pull up/down resistors!)
+-----   ------------------------------------------------------------------------
+    3   GPIO36, ADC0 (ADC1_CH0)
+    4   GPIO39, ADC3 (ADC1_CH3)
+    5   GPIO34, ADC6 (ADC1_CH6)
+    6   GPIO35, ADC7 (ADC1_CH7)
+-----   ------------------------------------------------------------------------
+        The following pins are "general purpose" (* note caveats, as shown)
+-----   ------------------------------------------------------------------------
+    7   GPIO32, ADC4 (ADC1_CH4), TOUCH9
+    8   GPIO33, ADC5 (ADC1_CH5), TOUCH8
+    9   GPIO25, ADC18 (ADC2_CH8), DAC1
+   10   GPIO26, ADC19 (ADC2_CH9), DAC2
+   11   GPIO27, ADC17 (ADC2_CH7), TOUCH7
+   12   GPIO14, ADC16 (ADC2_CH6), TOUCH6 (* outputs PWM at boot)
+   13   GPIO12, ADC15 (ADC2_CH5), TOUCH5 (* boot fails if pulled high)
+-----   ------------------------------------------------------------------------
+   14   GND
+-----   ------------------------------------------------------------------------
+        The following pins are "general purpose" (* note caveats, as shown)
+-----   ------------------------------------------------------------------------
+   15   GPIO13, ADC14 (ADC2_CH4)
+-----   ------------------------------------------------------------------------
+!!!!!   The following pins are reserved for onboard SPI flash - AVOID/DO NOT USE
+-----   ------------------------------------------------------------------------
+   16   GPIO9, SHD/SD2, (* default uart RX1)
+   17   GPIO10, SWP/SD3, (* default uart TX1)
+   18   GPIO11, CSC/CMD
+-----   ------------------------------------------------------------------------
+   19   5V input
+-----   ------------------------------------------------------------------------
+!!!!!   The following pins are reserved for onboard SPI flash - AVOID/DO NOT USE
+-----   ------------------------------------------------------------------------
+   20   GPIO6, SCK/CLK
+   21   GPIO7, SDO/SD0
+   22   GPIO8, SDI/SD1
+-----   ------------------------------------------------------------------------
+        The following pins are "general purpose" (* note caveats, as shown)
+-----   ------------------------------------------------------------------------
+   23   GPIO15, ADC13 (ADC2_CH3), TOUCH3 (* outputs PWM at boot)
+   24   GPIO2, ADC12 (ADC2_CH2), TOUCH2 (* on-board LED)
+   25   GPIO0, ADC11 (ADC2_CH1), TOUCH1 (* pulled up as input, outputs PWM at boot)
+   26   GPIO4, ADC10 (ADC2_CH0), TOUCH0
+   27   GPIO16, (* default uart RX2)
+   28   GPIO17, (* default uart TX2)
+   29   GPIO5, VSPI SS (* outputs PWM at boot)
+   30   GPIO18, VSPI SCK
+   31   GPIO19, VSPI MISO
+-----   ------------------------------------------------------------------------
+   32   GND
+-----   ------------------------------------------------------------------------
+        The following pins are "general purpose" (* note caveats, as shown)
+-----   ------------------------------------------------------------------------
+   33   GPIO21, I2C SDA
+   34   GPIO3, (* input only, high at boot, default uart RX0)
+   35   GPIO1, (* output only, debug output at boot, default uart TX0)
+   36   GPIO22, I2C SCL
+   37   GPIO23, VSPI MOSI
+-----   ------------------------------------------------------------------------
+   38   GND
