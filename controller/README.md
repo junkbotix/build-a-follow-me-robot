@@ -80,7 +80,7 @@ The first depicts how and where I was going to place the PCB inside the original
 * [ESP32 Pinout](./files/esp32-pinout.jpg)
 * [ESP32 Pins and Functions](./files/pins-and-functions.txt)
 * [General Auto-Reset Circuit](./files/general-auto-reset.jpg)
-* [TIP102 datasheet](./files/TIP102.p)
+* [TIP102 datasheet](./files/TIP102.pdf)
 * [MAX232 datasheet](./files/MAX3232.pdf)
 * [AD84064 datasheet (chinese) - 12 to 5 volt voltage regulator (in USB automotive charger)](./files/AD84064.pdf)
 
