@@ -2,7 +2,7 @@
 
 <br>
 
-[![Part 10](./images/title-720px.jpg)](https://www.youtube.com/watch?v=)
+[![Part 10](./images/title-720px.jpg)](https://www.youtube.com/watch?v=R-nN7bM4Fe8)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 

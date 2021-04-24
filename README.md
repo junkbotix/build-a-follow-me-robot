@@ -4,7 +4,7 @@
 
 ## On YouTube
 
-[![Part 9](./chassis-electrical/images/chassis-electrical-720px.jpg)](https://www.youtube.com/watch?v=LijISf1I_SE)
+[![Part 10](./controller/images/title-720px.jpg)](https://www.youtube.com/watch?v=R-nN7bM4Fe8)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
@@ -45,6 +45,19 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
     * [Garmin Etrex Custom Interface Cable](./gps/interface-cable)
     * [Additional Files](./gps/files)
   * [Safety Beacons](./safety-beacons)
-* [Software](./software)
-  * [ESP32](./software/esp32)
-    * [Tests](./software/esp32/tests)
+* [Part 11 - Software](./software)
+  * [Code for ESP32](./software/esp32)
+    * [FMController](./software/esp32/FMController) - Base controller firmware
+    * [Libraries](./software/esp32/libraries) - Custom support libraries
+      * [Junkbotix_Beacons](./software/esp32/libraries/Junkbotix_Beacons) - Interface library for LED and audible beacons
+      * [Junkbotix_Comms](./software/esp32/libraries/Junkbotix_Comms) - Serial and web communications library
+      * [Junkbotix_Etrex](./software/esp32/libraries/Junkbotix_Etrex) - Interface library for the Garmin Etrex GPS (serial)
+      * [Junkbotix_Nav](./software/esp32/libraries/Junkbotix_Nav) - Navigation library
+      * [Junkbotix_Planner](./software/esp32/libraries/Junkbotix_Planner) - Route planner library
+      * [Junkbotix_Victor884](./software/esp32/libraries/Junkbotix_Victor884) - Interface library for Victor-884 motor controllers
+      * [Junkbotix_Webserver](./software/esp32/libraries/Junkbotix_Webserver) - Web server library
+    * [Test Code](./software/esp32/tests) - Various prototype test code
+      * [Flasher](./software/esp32/tests/flasher)
+      * [Sweep Servo Test](./software/esp32/tests/sweep-servo-test)
+      * [GPS Serial Test](./software/esp32/tests/gps-serial-test)
+      * [Beacons and Motors Test](./software/esp32/tests/beacons-motors-test)
