@@ -2,9 +2,9 @@
 
 <br>
 
-## On YouTube
+## Watch now on YouTube:
 
-[![Part 10](./controller/images/title-720px.jpg)](https://www.youtube.com/watch?v=R-nN7bM4Fe8)
+[![Part 11.1](./software/images/title-720px.jpg)](https://www.youtube.com/watch?v=7EC0L8-eelA)
 
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 

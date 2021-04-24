@@ -1,5 +1,11 @@
 ![Junkbotix Banner](./images/banner-1024px.jpg)
 
+<br>
+
+## Watch now on YouTube:
+
+[![Part 11.1](./images/title-720px.jpg)](https://www.youtube.com/watch?v=7EC0L8-eelA)
+
 Check out the latest on this project and other tutorials at the [Junkbotix Channel](https://www.youtube.com/channel/UCNxQ47xBEYjD-mey_lxj9Aw) on Youtube!
 
 <br>
