@@ -4,7 +4,7 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
 
 <br>
 
-## Firmware for the Junkbotix Build A "Follow-Me" Robot
+## Firmware for the Junkbotix Build A "Follow-Me" Robot (!!! WIP !!!)
 
 * [FMController](./FMController) - Base controller firmware
 * [Libraries](./libraries) - Custom support libraries

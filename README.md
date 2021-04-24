@@ -45,7 +45,7 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
     * [Garmin Etrex Custom Interface Cable](./gps/interface-cable)
     * [Additional Files](./gps/files)
   * [Safety Beacons](./safety-beacons)
-* [Part 11 - Software](./software)
+* [Part 11 - Software](./software) (!!! WIP !!!)
   * [Code for ESP32](./software/esp32)
     * [FMController](./software/esp32/FMController) - Base controller firmware
     * [Libraries](./software/esp32/libraries) - Custom support libraries
