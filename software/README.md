@@ -13,7 +13,16 @@ Here you'll find links to all the source code and software developed for this tu
 ## Quicklinks
 
 * [Code for ESP32](./esp32)
-  * [Test Code](./esp32/tests)
+  * [FMController](./esp32/FMController) - Base controller firmware
+  * [Libraries](./esp32/libraries) - Custom support libraries
+    * [Junkbotix_Beacons](./esp32/libraries/Junkbotix_Beacons) - Interface library for LED and audible beacons
+    * [Junkbotix_Comms](./esp32/libraries/Junkbotix_Comms) - Serial and web communications library
+    * [Junkbotix_Etrex](./esp32/libraries/Junkbotix_Etrex) - Interface library for the Garmin Etrex GPS (serial)
+    * [Junkbotix_Nav](./esp32/libraries/Junkbotix_Nav) - Navigation library
+    * [Junkbotix_Planner](./esp32/libraries/Junkbotix_Planner) - Route planner library
+    * [Junkbotix_Victor884](./esp32/libraries/Junkbotix_Victor884) - Interface library for Victor-884 motor controllers
+    * [Junkbotix_Webserver](./esp32/libraries/Junkbotix_Webserver) - Web server library
+  * [Test Code](./esp32/tests) - Various prototype test code
     * [Flasher](./esp32/tests/flasher)
     * [Sweep Servo Test](./esp32/tests/sweep-servo-test)
     * [GPS Serial Test](./esp32/tests/gps-serial-test)
