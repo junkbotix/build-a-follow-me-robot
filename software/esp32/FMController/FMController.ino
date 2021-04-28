@@ -34,148 +34,165 @@ Junkbotix_Beacons AudBeacon(AUD_BEACON);
 Junkbotix_Etrex EtrexGPS(ETREX_TX, ETREX_RX);
 
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
-  /*
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(100);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(750);
-  */
+    /*
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(100);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(750);
+    */
+    
+    switch (FMRobot.GetState()) {
+        case WAIT_FOR_GPS:
+            if (true) {
+                // Valid GPS: Flash/Beep Beacons 2x
+                FMRobot.SetState(WAIT_FOR_CLIENT_REQUEST);                
+            } else {
+                // Invalid GPS: Fade in/out LED Beacon (LED breathing)
+            }
 
-/*
-    State WAIT_FOR_GPS:
+            break;
 
-        Valid GPS:            
-            Flash/Beep Beacons 2x
-            Set State WAIT_FOR_CLIENT_REQUEST
+        case WAIT_FOR_CLIENT_REQUEST:
+            if (true) {
+                /* 
+                Controller Page Requested:
+                    Send client browser Controller page
+                    Set Current Message (NO_MESSAGE)
+                */
+                FMRobot.SetState(GET_ONBOARD_GPS_DATA);                
+            } else {
+                // Controller Page Not Requested: Fade in/out LED Beacon (LED breathing)
+            }
 
-        !Valid GPS:
-            Fade in/out LED Beacon (LED breathing)
+            break;
 
-        Exit
+        case GET_ONBOARD_GPS_DATA:
+            /*
+            Save GPS Data (use running average filter for each):
+                Latitude
+                Longitude
+                Heading 
 
-    State WAIT_FOR_CLIENT_REQUEST:
-        Controller Page Requested:
-            Send client browser Controller page
-            Set Current Message (NO_MESSAGE)
-            Set State GET_ONBOARD_GPS_DATA
+            Get Current Message
 
-        !Requested:
-            Fade in/out LED Beacon (LED breathing)
-        
-        Exit
+            If Message Received:
+                Set State VALIDATE_CREDS
+                Save Message as Current Message
+            */
+            break;
 
-    State GET_ONBOARD_GPS_DATA:
-        Save GPS Data (use running average filter for each):
-            Latitude
-            Longitude
-            Heading 
+        case VALIDATE_CREDS:
+            FMRobot.SetState(HANDLE_INVALID_CREDS);
+            /*
+            Set State HANDLE_INVALID_CREDS
 
-        Get Current Message
+            Get Credentials (from Current Message)
 
-        If Message Received:
-            Set State VALIDATE_CREDS
-            Save Message as Current Message
+            If Valid Credentials:
+                Send Response VALID_CREDENTIALS
+                Set State HANDLE_CURRENT_MESSAGE
+            */
+            break;
 
-        Exit
+        case HANDLE_INVALID_CREDS:
+            /*
+            Send Response INVALID_CREDENTIALS
+            */
+            FMRobot.SetState(WAIT_FOR_GPS);
+            break;
 
-    State VALIDATE_CREDS:
-        Set State HANDLE_INVALID_CREDS
+        case HANDLE_CURRENT_MESSAGE:
+            FMRobot.SetState(HANDLE_INVALID_MESSAGE);
+            /*
+            If Message == POSITION_UPDATE:
+                Set State HANDLE_POSITION_UPDATE
 
-        Get Credentials (from Current Message)
+            If Message == MANUAL_CONTROL:
+                Set State HANDLE_MANUAL_CONTROL
+            */
+            break;
 
-        If Valid Credentials:
-            Send Response VALID_CREDENTIALS
-            Set State HANDLE_CURRENT_MESSAGE
+        case HANDLE_INVALID_MESSAGE:
+            /*
+            Send Response INVALID_MESSAGE
+            */
+            FMRobot.SetState(WAIT_FOR_GPS);
+            break;
 
-        Exit
+        case HANDLE_POSITION_UPDATE:
+            /*
+            Save Client Latitude/Longitude/Heading from Message
+            Send Response NAVIGATING_MESSAGE
+            */
+            FMRobot.SetState(HANDLE_NAVIGATION);
+            break;
 
-    State HANDLE_INVALID_CREDS:
-        Send Response INVALID_CREDENTIALS
-        Set State WAIT_FOR_GPS
-        Exit
+        case HANDLE_MANUAL_CONTROL:
+            FMRobot.SetState(GET_ONBOARD_GPS_DATA);
+            /*
+            Save Command from Message
+            Send Response MANUAL_CONTROL_MESSAGE
 
-    State HANDLE_CURRENT_MESSAGE:
-        Set State HANDLE_INVALID_MESSAGE
+            If Command == E_STOP:
+                Send Response E_STOP_MESSAGE
+                Set State HCF_HALT
+            */
 
-        If Message == POSITION_UPDATE:
-            Set State HANDLE_POSITION_UPDATE
+            /*
+                # Potential future manual control commands:
 
-        If Message == MANUAL_CONTROL:
-            Set State HANDLE_MANUAL_CONTROL
+                # Stop 
+                # Blink 
+                # Beep
 
-        Exit
+                # Forward/Right
+                # Forward
+                # Forward/Left
 
-    State HANDLE_INVALID_MESSAGE:
-        Send Response INVALID_MESSAGE
-        Set State WAIT_FOR_GPS
-        Exit
+                # Reverse/Right
+                # Reverse
+                # Reverse/Left
+            */           
+            break;
 
-    State HANDLE_POSITION_UPDATE:
-        Save Client Latitude/Longitude/Heading from Message
-        Send Response NAVIGATING_MESSAGE
-        Set State HANDLE_NAVIGATION
-        Exit
+        case HANDLE_NAVIGATION:
+            FMRobot.SetState(HANDLE_MOVEMENT);
+            /*
+            Get Robot GPS Data (Latitude, Longitude, Heading)
+            
+            Calculate Robot Heading and Distance from Robot to Client
 
-    State HANDLE_MANUAL_CONTROL:
-        Set State GET_ONBOARD_GPS_DATA
+            If Distance is under Threshold:
+                Set State HANDLE_ARRIVAL
+            */
+            break;
 
-        Save Command from Message
-        Send Response MANUAL_CONTROL_MESSAGE
+        case HANDLE_MOVEMENT:
+            /*
+            Set Robot Motors to Move Toward Client Position
+            */
+            FMRobot.SetState(GET_ONBOARD_GPS_DATA);
+            break;
 
-        If Command == E_STOP:
-            Send Response E_STOP_MESSAGE
-            Set State HCF_HALT
+        case HANDLE_ARRIVAL:
+            /*
+            Send Response ARRIVAL_MESSAGE
+            Flash/Beep Beacons 4x
+            */
+            FMRobot.Halt();
+            FMRobot.SetState(GET_ONBOARD_GPS_DATA);
+            break;
 
-        Exit
-
-        # Potential future manual control Commands:
-
-        # Stop 
-        # Blink 
-        # Beep
-
-        # Forward/Right
-        # Forward
-        # Forward/Left
-
-        # Reverse/Right
-        # Reverse
-        # Reverse/Left
-
-    State HANDLE_NAVIGATION:
-        Set State HANDLE_MOVEMENT
-
-        Get Robot GPS Data (Latitude, Longitude, Heading)
-        
-        Calculate Robot Heading and Distance from Robot to Client
-
-        If Distance is under Threshold:
-            Set State HANDLE_ARRIVAL
-
-        Exit
-
-    State HANDLE_MOVEMENT:
-        Set Robot Motors to Move Toward Client Position
-        Set State GET_ONBOARD_GPS_DATA
-        Exit
-
-    State HANDLE_ARRIVAL:
-        Send Response ARRIVAL_MESSAGE
-        Flash/Beep Beacons 4x
-        Turn off motors
-        Turn off beacons
-        Set State GET_ONBOARD_GPS_DATA
-        Exit
-
-    State HCF_HALT:
-        Turn off motors
-        Turn off beacons
-        Exit
-        # At this point power must be cycled (reset)
-*/
-
+        case HCF_HALT:
+            // NOTE: break statement purposefully omitted...
+        default:
+            // Anything that doesn't match a previously defined state, 
+            // if it gets here, halt all robot operations
+            FMRobot.Halt();
+            // At this point power must be cycled (reset)
+    }
 }
