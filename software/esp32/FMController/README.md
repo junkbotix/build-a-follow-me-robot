@@ -4,9 +4,10 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
 
 <br>
 
-## Firmware for the Junkbotix Build A "Follow-Me" Robot
+## Controller Firmware for the Junkbotix Build A "Follow-Me" Robot
 
-* [FMController.ino](./FMController.ino) - Base controller firmware
+* [FMController.h](./FMController.h) - Defined constants
+* [FMController.ino](./FMController.ino) - Firmware
 
 <br>
 

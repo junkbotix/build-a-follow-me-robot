@@ -4,15 +4,24 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
 
 <br>
 
-## Firmware for the Junkbotix Build A "Follow-Me" Robot (!!! WIP !!!)
+## Firmware State Machine (!!! WIP !!!)
 
-* [FMController](./FMController) - Base controller firmware
+* [State Machine Outline](./files/STATE-MACHINE-OUTLINE.md) - Basic outline for the firmware state machine process
+
+<br>
+
+## Firmware for the Junkbotix Build A "Follow-Me" Robot (!!! WIP !!!)
+  
+* [FMController](./FMController) - Controller firmware
 * [Libraries](./libraries) - Custom support libraries
   * [Junkbotix_Beacons](./libraries/Junkbotix_Beacons) - Interface library for LED and audible beacons
+  * [Junkbotix_Client](./libraries/Junkbotix_Client) - Class to model the client
+  * [Junkbotix_Common](./libraries/Junkbotix_Common) - Common library/class structures, defines, etc
   * [Junkbotix_Comms](./libraries/Junkbotix_Comms) - Serial and web communications library
   * [Junkbotix_Etrex](./libraries/Junkbotix_Etrex) - Interface library for the Garmin Etrex GPS (serial)
   * [Junkbotix_Nav](./libraries/Junkbotix_Nav) - Navigation library
   * [Junkbotix_Planner](./libraries/Junkbotix_Planner) - Route planner library
+  * [Junkbotix_Robot](./libraries/Junkbotix_Robot) - Class to model the robot
   * [Junkbotix_Victor884](./libraries/Junkbotix_Victor884) - Interface library for Victor-884 motor controllers
   * [Junkbotix_Webserver](./libraries/Junkbotix_Webserver) - Web server library
 * [Tests](./tests) - Various prototype test code

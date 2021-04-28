@@ -47,13 +47,17 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
   * [Safety Beacons](./safety-beacons)
 * [Part 11 - Software](./software) (!!! WIP !!!)
   * [Code for ESP32](./software/esp32)
+    * [State Machine Outline](./software/esp32/files/STATE-MACHINE-OUTLINE.md) - Basic outline for the firmware state machine process
     * [FMController](./software/esp32/FMController) - Base controller firmware
     * [Libraries](./software/esp32/libraries) - Custom support libraries
       * [Junkbotix_Beacons](./software/esp32/libraries/Junkbotix_Beacons) - Interface library for LED and audible beacons
+      * [Junkbotix_Client](./software/esp32/libraries/Junkbotix_Client) - Class to model the client
+      * [Junkbotix_Common](./software/esp32/libraries/Junkbotix_Common) - Common library/class structures, defines, etc
       * [Junkbotix_Comms](./software/esp32/libraries/Junkbotix_Comms) - Serial and web communications library
       * [Junkbotix_Etrex](./software/esp32/libraries/Junkbotix_Etrex) - Interface library for the Garmin Etrex GPS (serial)
       * [Junkbotix_Nav](./software/esp32/libraries/Junkbotix_Nav) - Navigation library
       * [Junkbotix_Planner](./software/esp32/libraries/Junkbotix_Planner) - Route planner library
+      * [Junkbotix_Robot](./software/esp32/libraries/Junkbotix_Robot) - Class to model the robot
       * [Junkbotix_Victor884](./software/esp32/libraries/Junkbotix_Victor884) - Interface library for Victor-884 motor controllers
       * [Junkbotix_Webserver](./software/esp32/libraries/Junkbotix_Webserver) - Web server library
     * [Test Code](./software/esp32/tests) - Various prototype test code

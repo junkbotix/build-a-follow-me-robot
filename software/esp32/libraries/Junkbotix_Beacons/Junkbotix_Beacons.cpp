@@ -17,4 +17,5 @@ void Junkbotix_Beacons::loop() {
 
 Junkbotix_Beacons::Junkbotix_Beacons(byte gpio) {
     _gpio = gpio;
+    pinMode(gpio, OUTPUT);
 }

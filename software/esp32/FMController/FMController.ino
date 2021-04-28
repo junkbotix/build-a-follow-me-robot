@@ -7,21 +7,20 @@
     http://www.gnu.org/licenses/gpl-3.0.en.html
 */
 
+/* Framework Class Libraries */
+#include <Junkbotix_Common.h>
+#include <Junkbotix_Robot.h>
+#include <Junkbotix_Client.h>
 #include <Junkbotix_Victor884.h>
 #include <Junkbotix_Beacons.h>
 #include <Junkbotix_Etrex.h>
 
-// Recommended PWM GPIO pins on the ESP32 include:
-// 2, 4, 12-19, 21-23, 25-27, 32-33
-#define LED_BUILTIN   2   // pin 24 (controls ESP32 on-board LED)
+/* Various defined constants for controller and state machine logic */
+#include "FMController.h"
 
-#define LEFT_MOTOR    32  // pin 7  (servo PPM output for Victor-884)
-#define RIGHT_MOTOR   33  // pin 8  (servo PPM output for Victor-884)
-#define LED_BEACON    25  // pin 9  (TIP102 switch to flash LED beacon)
-#define AUD_BEACON    26  // pin 10 (TIP102 switch to sound the audible beacon)
-
-#define ETREX_RX      16  // pin 27 (connected to MAX3232 converter TX pin)
-#define ETREX_TX      17  // pin 28 (connected to MAX3232 converter RX pin)
+// Instantiate robot and client model objects
+Junkbotix_Robot FMRobot(WAIT_FOR_GPS);
+Junkbotix_Client FMClient();
 
 // Instantiate motor controller interface objects
 Junkbotix_Victor884 LeftMotor(LEFT_MOTOR);
@@ -39,8 +38,144 @@ void setup() {
 }
 
 void loop() {
+  /*
   digitalWrite(LED_BUILTIN, HIGH);
   delay(100);
   digitalWrite(LED_BUILTIN, LOW);
   delay(750);
+  */
+
+/*
+    State WAIT_FOR_GPS:
+
+        Valid GPS:            
+            Flash/Beep Beacons 2x
+            Set State WAIT_FOR_CLIENT_REQUEST
+
+        !Valid GPS:
+            Fade in/out LED Beacon (LED breathing)
+
+        Exit
+
+    State WAIT_FOR_CLIENT_REQUEST:
+        Controller Page Requested:
+            Send client browser Controller page
+            Set Current Message (NO_MESSAGE)
+            Set State GET_ONBOARD_GPS_DATA
+
+        !Requested:
+            Fade in/out LED Beacon (LED breathing)
+        
+        Exit
+
+    State GET_ONBOARD_GPS_DATA:
+        Save GPS Data (use running average filter for each):
+            Latitude
+            Longitude
+            Heading 
+
+        Get Current Message
+
+        If Message Received:
+            Set State VALIDATE_CREDS
+            Save Message as Current Message
+
+        Exit
+
+    State VALIDATE_CREDS:
+        Set State HANDLE_INVALID_CREDS
+
+        Get Credentials (from Current Message)
+
+        If Valid Credentials:
+            Send Response VALID_CREDENTIALS
+            Set State HANDLE_CURRENT_MESSAGE
+
+        Exit
+
+    State HANDLE_INVALID_CREDS:
+        Send Response INVALID_CREDENTIALS
+        Set State WAIT_FOR_GPS
+        Exit
+
+    State HANDLE_CURRENT_MESSAGE:
+        Set State HANDLE_INVALID_MESSAGE
+
+        If Message == POSITION_UPDATE:
+            Set State HANDLE_POSITION_UPDATE
+
+        If Message == MANUAL_CONTROL:
+            Set State HANDLE_MANUAL_CONTROL
+
+        Exit
+
+    State HANDLE_INVALID_MESSAGE:
+        Send Response INVALID_MESSAGE
+        Set State WAIT_FOR_GPS
+        Exit
+
+    State HANDLE_POSITION_UPDATE:
+        Save Client Latitude/Longitude/Heading from Message
+        Send Response NAVIGATING_MESSAGE
+        Set State HANDLE_NAVIGATION
+        Exit
+
+    State HANDLE_MANUAL_CONTROL:
+        Set State GET_ONBOARD_GPS_DATA
+
+        Save Command from Message
+        Send Response MANUAL_CONTROL_MESSAGE
+
+        If Command == E_STOP:
+            Send Response E_STOP_MESSAGE
+            Set State HCF_HALT
+
+        Exit
+
+        # Potential future manual control Commands:
+
+        # Stop 
+        # Blink 
+        # Beep
+
+        # Forward/Right
+        # Forward
+        # Forward/Left
+
+        # Reverse/Right
+        # Reverse
+        # Reverse/Left
+
+    State HANDLE_NAVIGATION:
+        Set State HANDLE_MOVEMENT
+
+        Get Robot GPS Data (Latitude, Longitude, Heading)
+        
+        Calculate Robot Heading and Distance from Robot to Client
+
+        If Distance is under Threshold:
+            Set State HANDLE_ARRIVAL
+
+        Exit
+
+    State HANDLE_MOVEMENT:
+        Set Robot Motors to Move Toward Client Position
+        Set State GET_ONBOARD_GPS_DATA
+        Exit
+
+    State HANDLE_ARRIVAL:
+        Send Response ARRIVAL_MESSAGE
+        Flash/Beep Beacons 4x
+        Turn off motors
+        Turn off beacons
+        Set State GET_ONBOARD_GPS_DATA
+        Exit
+
+    State HCF_HALT:
+        Turn off motors
+        Turn off beacons
+        Exit
+        # At this point power must be cycled (reset)
+*/
+
 }
