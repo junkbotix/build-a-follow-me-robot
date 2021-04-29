@@ -12,8 +12,24 @@ Junkbotix_Beacons	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################################
 
-loop	KEYWORD2
+init	KEYWORD2
+reset	KEYWORD2
+blink	KEYWORD2
+flash	KEYWORD2
+breath	KEYWORD2
 
 #######################################################
 # Constants (LITERAL1)
 #######################################################
+
+BEACON_PWM_FREQUENCY	LITERAL1
+BEACON_PWM_CHANNEL	LITERAL1
+BEACON_PWM_RESOLUTION	LITERAL1
+BEACON_TOGGLE	LITERAL1
+BEACON_BREATH	LITERAL1
+BEACON_HALTED	LITERAL1
+BEACON_ON	LITERAL1
+BEACON_OFF	LITERAL1
+BEACON_FADEIN	LITERAL1
+BEACON_FADEOUT	LITERAL1
+BEACON_PAUSED	LITERAL1

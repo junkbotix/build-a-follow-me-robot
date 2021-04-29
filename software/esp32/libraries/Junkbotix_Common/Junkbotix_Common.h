@@ -8,6 +8,8 @@
 #ifndef Junkbotix_Common_h
 #define Junkbotix_Common_h
 
+#define LED_BUILTIN     2   // pin 24 (controls ESP32 on-board LED)
+
 struct Position {
     float latitude;
     float longitude;

@@ -1,13 +1,13 @@
-/*
-    Build A "Follow-Me" Robot: Part 11 - Software
+/**
+ * Build A "Follow-Me" Robot: Part 11 - Software
+ *
+ * FMController.cpp - Firmware for the Junkbotix Build A "Follow-Me" Robot 
+ * Copyright (c) 2021 by Junkbotix 
+ * Licensed under the GNU Public License (GPL) Version 3 
+ * http://www.gnu.org/licenses/gpl-3.0.en.html 
+ */ 
 
-    FMController.cpp - Firmware for the Junkbotix Build A "Follow-Me" Robot
-    Copyright (c) 2021 by Junkbotix
-    Licensed under the GNU Public License (GPL) Version 3
-    http://www.gnu.org/licenses/gpl-3.0.en.html
-*/
-
-/* Framework Class Libraries */
+/** Framework Class Libraries */
 #include <Junkbotix_Common.h>
 #include <Junkbotix_Robot.h>
 #include <Junkbotix_Client.h>
@@ -15,26 +15,49 @@
 #include <Junkbotix_Beacons.h>
 #include <Junkbotix_Etrex.h>
 
-/* Various defined constants for controller and state machine logic */
+/** Various defined constants for controller and state machine logic */
 #include "FMController.h"
 
-// Instantiate robot and client model objects
+/** Instantiate robot and client model objects */
 Junkbotix_Robot FMRobot(WAIT_FOR_GPS);
 Junkbotix_Client FMClient();
 
-// Instantiate motor controller interface objects
+/** Instantiate motor controller interface objects */
 Junkbotix_Victor884 LeftMotor(LEFT_MOTOR);
 Junkbotix_Victor884 RightMotor(RIGHT_MOTOR);
 
-// Instantiate LED and audible beacon interface objects
-Junkbotix_Beacons LedBeacon(LED_BEACON);
-Junkbotix_Beacons AudBeacon(AUD_BEACON);
+/** Instantiate LED and audible beacon interface objects */
+Junkbotix_Beacons BuiltinBeacon;
+Junkbotix_Beacons AudibleBeacon;
+Junkbotix_Beacons BlinkBeacon;
+Junkbotix_Beacons FlashBeacon;
+Junkbotix_Beacons BreathBeacon;
 
-// Instantiate Etrex interface object
+/** Instantiate Etrex interface object */
 Junkbotix_Etrex EtrexGPS(ETREX_TX, ETREX_RX);
 
 void setup() {
-    pinMode(LED_BUILTIN, OUTPUT);
+    BeaconSettings base;
+
+    /** Setup default blinking beacon on built-in LED */
+    BuiltinBeacon.init();
+
+    /** Setup default blinking beacon for the audible alert */
+    AudibleBeacon.init({ gpio: AUD_BEACON });
+    
+    /** Setup a "flashing" style LED beacon */
+    base.gpio = LED_BEACON;
+    base.ondelay = 75;
+    base.offdelay = 500;
+    FlashBeacon.init(base);
+
+    /** Setup a "breathing" style LED beacon */
+    base.mode = BEACON_BREATH;
+    base.ondelay = 10;
+    base.offdelay = 10;
+    BreathBeacon.init(base);
+
+    //pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
