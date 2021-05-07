@@ -34,6 +34,7 @@ Here you'll find links to all the source code and software developed for this tu
     * [Sweep Servo Test](./esp32/tests/sweep-servo-test)
     * [GPS Serial Test](./esp32/tests/gps-serial-test)
     * [Beacons and Motors Test](./esp32/tests/beacons-motors-test)
+    * [Ping-Pong Async Web Server Test](./esp32/tests/pingpong-asyncwebserver-test)
 
 <br>
 

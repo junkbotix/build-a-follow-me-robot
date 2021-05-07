@@ -65,3 +65,17 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
       * [Sweep Servo Test](./software/esp32/tests/sweep-servo-test)
       * [GPS Serial Test](./software/esp32/tests/gps-serial-test)
       * [Beacons and Motors Test](./software/esp32/tests/beacons-motors-test)
+      * [Ping-Pong Async Web Server Test](./software/esp32/tests/pingpong-asyncwebserver-test)
+
+<br>
+
+## License
+
+Unless otherwise specified, all code is licensed as [GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html) and is Copyright (c) 2021 by Junkbotix
+
+See the [`LICENSE.md`](./LICENSE.md) file for more information.
+
+* If you wish to make a pull request against this repo, go for it, just know that any such request may or may not be used...
+* I make no guarantees that any of the code will compile properly or work at all!
+* I take no responsibility for your use or misuse of any of this code!
+* Caveat emptor!

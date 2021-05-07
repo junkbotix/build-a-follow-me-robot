@@ -24,7 +24,12 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
   * [Junkbotix_Robot](./libraries/Junkbotix_Robot) - Class to model the robot
   * [Junkbotix_Victor884](./libraries/Junkbotix_Victor884) - Interface library for Victor-884 motor controllers
   * [Junkbotix_Webserver](./libraries/Junkbotix_Webserver) - Web server library
-* [Tests](./tests) - Various prototype test code
+* [Test Code](./tests) - Various prototype test code
+  * [Flasher](./tests/flasher)
+  * [Sweep Servo Test](./tests/sweep-servo-test)
+  * [GPS Serial Test](./tests/gps-serial-test)
+  * [Beacons and Motors Test](./tests/beacons-motors-test)
+  * [Ping-Pong Async Web Server Test](./tests/pingpong-asyncwebserver-test)
 
 <br>
 
