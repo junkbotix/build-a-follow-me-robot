@@ -39,7 +39,7 @@ void onWiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
     Serial.println("");
     
     // Attach URL request handlers
-    server.on("/", onIndexReq);
+    server.on("/", _onIndexReq);
     server.on("/ping", onPingReq);
     server.on("/pong", onPongReq);
 

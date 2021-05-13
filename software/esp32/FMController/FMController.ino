@@ -11,6 +11,7 @@
 #include <Junkbotix_Common.h>
 #include <Junkbotix_Robot.h>
 #include <Junkbotix_Client.h>
+#include <Junkbotix_Webserver.h>
 #include <Junkbotix_Victor884.h>
 #include <Junkbotix_Beacons.h>
 #include <Junkbotix_Etrex.h>
@@ -21,6 +22,9 @@
 /** Instantiate robot and client model objects */
 Junkbotix_Robot FMRobot(WAIT_FOR_GPS);
 Junkbotix_Client FMClient();
+
+/** Instantiate on-board webserver **/
+Junkbotix_Webserver FMWebserver();
 
 /** Instantiate motor controller interface objects */
 Junkbotix_Victor884 LeftMotor(LEFT_MOTOR);
@@ -37,7 +41,7 @@ Junkbotix_Beacons BreathBeacon;
 Junkbotix_Etrex EtrexGPS(ETREX_TX, ETREX_RX);
 
 void setup() {
-    BeaconSettings base;
+    BeaconSettings bset;
 
     /** Setup default blinking beacon on built-in LED */
     BuiltinBeacon.init();
@@ -46,16 +50,16 @@ void setup() {
     AudibleBeacon.init({ gpio: AUD_BEACON });
     
     /** Setup a "flashing" style LED beacon */
-    base.gpio = LED_BEACON;
-    base.ondelay = 75;
-    base.offdelay = 500;
-    FlashBeacon.init(base);
+    bset.gpio = LED_BEACON;
+    bset.ondelay = 75;
+    bset.offdelay = 500;
+    FlashBeacon.init(bset);
 
     /** Setup a "breathing" style LED beacon */
-    base.mode = BEACON_BREATH;
-    base.ondelay = 10;
-    base.offdelay = 10;
-    BreathBeacon.init(base);
+    bset.mode = BEACON_BREATH;
+    bset.ondelay = 10;
+    bset.offdelay = 10;
+    BreathBeacon.init(bset);
 
     //pinMode(LED_BUILTIN, OUTPUT);
 }
