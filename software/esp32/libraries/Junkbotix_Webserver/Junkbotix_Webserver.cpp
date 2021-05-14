@@ -1,17 +1,12 @@
-/*
-    Junkbotix_Webserver.cpp - Web server library
-    Copyright (c) 2021 by Junkbotix
-    Licensed under the GNU Public License (GPL) Version 3
-    http://www.gnu.org/licenses/gpl-3.0.en.html
-*/
+/**
+ *  Junkbotix_Webserver.cpp - Web server library
+ *  Copyright (c) 2021 by Junkbotix
+ *  Licensed under the GNU Public License (GPL) Version 3
+ *  http://www.gnu.org/licenses/gpl-3.0.en.html
+ */
 
 #include "Arduino.h"
 #include "Junkbotix_Webserver.h"
-
-
-/** Calculate running averages for latitude, longitude, and heading */
-void Junkbotix_Webserver::_calcRunningAverages() {
-}
 
 /** Request handler for the index page */
 void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
@@ -20,40 +15,32 @@ void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
     request->send_P(200, "text/html", index_html);    
 }
 
-/** Request handler for the client's geolocation coordinates */
+/** Request handler for the client's reporting of geolocation coordinates */
 void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
-    _rawPosition[_pcount].latitude = request->arg("lat").toFloat();
-    _rawPosition[_pcount].longitude = request->arg("lon").toFloat();
-    _rawPosition[_pcount].heading = request->arg("hed").toFloat();
+    Serial.println("Handling request for client geolocation...");
+    Serial.println("");
 
-    if (_pcount++ > 9) {
-        _pcount = 0; // not sure if this is right??? not really a running avg...?
-        
-        for (int i = 0; i < 10; i++) {
-            _calcPosition.latitude += _rawPosition[i].latitude;
-            _calcPosition.longitude += _rawPosition[i].longitude;
-            _calcPosition.heading += _rawPosition[i].heading;
-        }
-        
-        _calcPosition.latitude = _calcPosition.latitude / 10;
-        _calcPosition.longitude = _calcPosition.longitude / 10;
-        _calcPosition.heading = _calcPosition.heading / 10;
-    }
+    _lastClientPosition.latitude = request->arg("lat").toFloat();
+    _lastClientPosition.longitude = request->arg("lon").toFloat();
+    _lastClientPosition.heading = request->arg("hed").toFloat();
 
-    Serial.println("YOLO"); // need a better message here...
     request->send(200);
 }
 
 /** Request handler for an emergency stop */
 void Junkbotix_Webserver::_onEStopReq(AsyncWebServerRequest *request) {
+    Serial.println("Handling request for E-STOP...");
+    Serial.println("");
+
     _eStopFlag = true;
-    Serial.println(">>> !!! E-STOP ACTIVATED !!! <<<");
+    
     request->send(200);    
 }
 
 /** Request handler for an unknown request */
 void Junkbotix_Webserver::_onNotFoundReq(AsyncWebServerRequest *request) {
-    Serial.println("404 - Request handler not found...");
+    Serial.println("Handling unknown request...");
+    Serial.println("");
     request->send_P(404, "text/html", e404_html);
 }
 
@@ -86,8 +73,6 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
     // Start the server
     _server.begin();
 
-    delay(1000);  // can we do something different here? is this even needed?
-
     // Give some help to the user
     Serial.println("Junkbotix FMRobot Webserver started...");
     Serial.println("");
@@ -102,23 +87,36 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
     Serial.println("");    
 }
 
+/** Return the last reported geolocation position of the client */
+Position Junkbotix_Webserver::getLastClientPosition() {
+    return _lastClientPosition;
+}
+
+/** Set SoftAP network credentials */
 void Junkbotix_Webserver::setCredentials(char* ssid, char* password) {
     _ssid = ssid;
     _password = password;
 }
 
+/** Set the port for the Async Webserver */
 void Junkbotix_Webserver::setPort(int port) {
     _port = port;
 }
-        
+
+/** Set the SoftAP IP Addresses */        
 void Junkbotix_Webserver::setAddresses(IPAddress local_ip, IPAddress gateway, IPAddress subnet) {
     _local_ip = local_ip;
     _gateway = gateway;
     _subnet = subnet;
 }
 
+/** Initialize the SoftAP and Async Webserver */
 void Junkbotix_Webserver::init() {
     Serial.begin(115200);
+    
+    Serial.println("");
+    Serial.println("Starting SoftAP...");
+    Serial.println("");
 
     AsyncWebServer _server(_port);
 
@@ -127,21 +125,7 @@ void Junkbotix_Webserver::init() {
     /* Handlers for SoftAP startup and station connection */
     WiFi.onEvent(_onWiFiAPStart, SYSTEM_EVENT_AP_START);
     WiFi.onEvent(_onWiFiStationConnected, SYSTEM_EVENT_AP_STACONNECTED);
-    
-    Serial.println("");
-    Serial.println("Starting SoftAP...");
-    Serial.println("");
-}
-
-// ARGH!!! - This may or may not be needed but derp...???
-void Junkbotix_Webserver::loop() {
-    if (millis() != _lastMillis) {
-        _calcRunningAverages();
-        _lastMillis = millis();
-    }
 }
 
 Junkbotix_Webserver::Junkbotix_Webserver() {
 }
-
-

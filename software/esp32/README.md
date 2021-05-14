@@ -19,6 +19,7 @@ Check out the latest on this project and other tutorials at the [Junkbotix Chann
   * [Junkbotix_Common](./libraries/Junkbotix_Common) - Common library/class structures, defines, etc
   * [Junkbotix_Comms](./libraries/Junkbotix_Comms) - Serial and web communications library
   * [Junkbotix_Etrex](./libraries/Junkbotix_Etrex) - Interface library for the Garmin Etrex GPS (serial)
+  * [Junkbotix_MovingAverage](./libraries/Junkbotix_MovingAverage) - Library for calculation of a moving average
   * [Junkbotix_Nav](./libraries/Junkbotix_Nav) - Navigation library
   * [Junkbotix_Planner](./libraries/Junkbotix_Planner) - Route planner library
   * [Junkbotix_Robot](./libraries/Junkbotix_Robot) - Class to model the robot

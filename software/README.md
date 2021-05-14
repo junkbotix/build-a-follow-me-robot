@@ -24,6 +24,7 @@ Here you'll find links to all the source code and software developed for this tu
     * [Junkbotix_Common](./esp32/libraries/Junkbotix_Common) - Common library/class structures, defines, etc
     * [Junkbotix_Comms](./esp32/libraries/Junkbotix_Comms) - Serial and web communications library
     * [Junkbotix_Etrex](./esp32/libraries/Junkbotix_Etrex) - Interface library for the Garmin Etrex GPS (serial)
+    * [Junkbotix_MovingAverage](./esp32/libraries/Junkbotix_MovingAverage) - Library for calculation of a moving average
     * [Junkbotix_Nav](./esp32/libraries/Junkbotix_Nav) - Navigation library
     * [Junkbotix_Planner](./esp32/libraries/Junkbotix_Planner) - Route planner library
     * [Junkbotix_Robot](./esp32/libraries/Junkbotix_Robot) - Class to model the robot

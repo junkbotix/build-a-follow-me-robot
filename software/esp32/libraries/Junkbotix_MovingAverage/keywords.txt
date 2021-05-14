@@ -1,22 +1,18 @@
 #######################################################
-# Syntax Coloring Map For Junkbotix_Webserver
+# Syntax Coloring Map For Junkbotix_MovingAverage
 #######################################################
 
 #######################################################
 # Datatypes (KEYWORD1)
 #######################################################
 
-Junkbotix_Webserver	KEYWORD1
+Junkbotix_MovingAverage	KEYWORD1
 
 #######################################################
 # Methods and Functions (KEYWORD2)
 #######################################################
 
-init	KEYWORD2
-getLastClientPosition   KEYWORD2
-setCredentials  KEYWORD2
-setPort KEYWORD2
-setAddresses    KEYWORD2
+calculate	KEYWORD2
 
 #######################################################
 # Constants (LITERAL1)
