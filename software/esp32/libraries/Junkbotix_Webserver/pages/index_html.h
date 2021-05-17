@@ -12,39 +12,62 @@ const char index_html[] PROGMEM = R"=====(
             }
         </style>
         <script>
-            var counter = 0;
+            // NOTE: This script is untested currently, and is not secure...
+            //       USE AT OWN RISK
 
-            function ping() {
+            // Geolocation interval in milliseconds
+            var interval = 5000; 
+
+            // Response messages textarea element
+            var messages = document.getElementById("messages");
+
+            // Browser geolocation successful, send coordinates back to robot
+            function success(position) {
+                var latitude  = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                var heading = position.coords.heading;
+
+                messages.value += "\nLat: ${latitude} °, Lon: ${longitude} °, Head: ${heading}";
+
                 var xhttp = new XMLHttpRequest();
 
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("message").innerHTML = this.responseText;
+                        messages.value += "\n" + this.responseText;
                     }
                 };
 
-                if (++counter > 10) counter = 10;
-
-                document.getElementById("count").innerHTML = counter;
-
-                xhttp.open("GET", "ping?count="+counter, true);
+                xhttp.open("GET", "location?lat="+latitude+"&lon="+longitude+"&hed="+heading, true);
                 xhttp.send();
             }
-            
-            function pong() {
+
+            // Browser geolocation unsuccessful...
+            function error() {
+                messages.value += "\nUnable to get the client location...";
+            }
+
+            // Check to see if browser can use geolocation
+            if (!navigator.geolocation) {
+                messages.value += "\nGeolocation is not supported by your browser...";
+            } else {
+                // If it can, geolocate every {interval}
+                setInterval(function() {
+                    messages.value += "\nLocating...";
+                    navigator.geolocation.getCurrentPosition(success, error);
+                }, interval);
+            }
+
+            // If the user presses the E-STOP button, send request to robot
+            function estop() {
                 var xhttp = new XMLHttpRequest();
 
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("message").innerHTML = this.responseText;
+                        messages.value += "\n" + this.responseText;
                     }
                 };
 
-                if (--counter < 1) counter = 1;
-
-                document.getElementById("count").innerHTML = counter;
-
-                xhttp.open("GET", "pong?count="+counter, true);
+                xhttp.open("GET", "estop", true);
                 xhttp.send();
             }
         </script>        
@@ -52,18 +75,14 @@ const char index_html[] PROGMEM = R"=====(
     <body>
         <div>
             <center>
-                <h1>PingPong</h1>
-                <h1>Async Web Server Test</h1>
+                <h2>Junkbotix</h2>
+                <h2>Follow Me Robot Client</h2>
+                <div>
+                    <button class="button" onclick="estop()">!!! E-STOP !!!</button>
+                </div>
             </center>
             <div>
-                <h2>Response: <span id="message"></span></h2>
-            </div>
-            <div>
-                <h2>Count: <span id="count"></span></h2>
-            </div>
-            <div>
-                <button class="button" onclick="ping()">Ping!</button>
-                <button class="button" onclick="pong()">Pong!</button>
+                <textarea id="messages" rows=40 cols=80 autofocus></textarea>
             </div>
         </div>
     </body>

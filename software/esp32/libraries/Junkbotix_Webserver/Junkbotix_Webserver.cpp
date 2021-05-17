@@ -24,7 +24,7 @@ void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
     _lastClientPosition.longitude = request->arg("lon").toFloat();
     _lastClientPosition.heading = request->arg("hed").toFloat();
 
-    request->send(200);
+    request->send(200, "text/plain", "Client geolocation request received...");    
 }
 
 /** Request handler for an emergency stop */
@@ -34,7 +34,7 @@ void Junkbotix_Webserver::_onEStopReq(AsyncWebServerRequest *request) {
 
     _eStopFlag = true;
     
-    request->send(200);    
+    request->send(200, "text/plain", "Client E-STOP request received...");    
 }
 
 /** Request handler for an unknown request */
@@ -127,5 +127,4 @@ void Junkbotix_Webserver::init() {
     WiFi.onEvent(_onWiFiStationConnected, SYSTEM_EVENT_AP_STACONNECTED);
 }
 
-Junkbotix_Webserver::Junkbotix_Webserver() {
-}
+Junkbotix_Webserver::Junkbotix_Webserver() {}
