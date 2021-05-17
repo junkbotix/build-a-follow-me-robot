@@ -7,15 +7,6 @@
  * http://www.gnu.org/licenses/gpl-3.0.en.html 
  */ 
 
-/** Framework Class Libraries */
-#include <Junkbotix_Common.h>
-#include <Junkbotix_Robot.h>
-#include <Junkbotix_Client.h>
-#include <Junkbotix_Webserver.h>
-#include <Junkbotix_Victor884.h>
-#include <Junkbotix_Beacons.h>
-#include <Junkbotix_Etrex.h>
-
 /** Various defined constants for controller and state machine logic */
 #include "FMController.h"
 

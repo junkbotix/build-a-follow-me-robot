@@ -10,6 +10,18 @@
     2, 4, 12-19, 21-23, 25-27, 32-33
 */
 
+#ifndef FMController_h
+#define FMController_h
+
+/** Framework Class Libraries */
+#include <Junkbotix_Common.h>
+#include <Junkbotix_Robot.h>
+#include <Junkbotix_Client.h>
+#include <Junkbotix_Webserver.h>
+#include <Junkbotix_Victor884.h>
+#include <Junkbotix_Beacons.h>
+#include <Junkbotix_Etrex.h>
+
 /******************************************************************************/
 
 #define LED_BUILTIN     2   // pin 24 (controls ESP32 on-board LED)
@@ -81,3 +93,5 @@
 #define E_STOP_MESSAGE              999 // Sent back when the client manual 
                                         // control selected is the emergency 
                                         // stop button
+
+#endif                                        

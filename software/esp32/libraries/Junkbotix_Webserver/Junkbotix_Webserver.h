@@ -21,17 +21,17 @@
 class Junkbotix_Webserver {
     private:
     
-        /** SoftAP default network credentials (change these) */
-        char* _ssid = "my-web-server";
-        char* _password = "password12345";
+        /** SoftAP default network credentials */
+        char* _ssid;
+        char* _password;
 
         /** Default port for the Async Webserver */
-        int _port = 8080;
+        int _port;
 
         /** SoftAP default IP Addresses */
-        IPAddress _local_ip(192,168,1,100);
-        IPAddress _gateway(192,168,1,1);
-        IPAddress _subnet((255,255,255,0);
+        IPAddress _local_ip;
+        IPAddress _gateway;
+        IPAddress _subnet;
 
         AsyncWebServer _server;
 
@@ -42,11 +42,14 @@ class Junkbotix_Webserver {
 
         long _lastMillis = 0;
 
-        /* Handlers for SoftAP startup and station connection */
+        /** Handlers for SoftAP startup and station connection */
         void _onWiFiAPStart(WiFiEvent_t event, WiFiEventInfo_t info);
         void _onWiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info);
 
-        /* Webserver request handlers */
+        /** Handler for client password checking */
+        bool _checkPassword(AsyncWebServerRequest *request);
+
+        /** Webserver request handlers */
         void _onIndexReq(AsyncWebServerRequest *request);
         void _onGeoLocationReq(AsyncWebServerRequest *request);
         void _onEStopReq(AsyncWebServerRequest *request);

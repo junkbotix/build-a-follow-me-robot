@@ -9,6 +9,7 @@
 #define Junkbotix_Beacons_h
 
 #include "Arduino.h"
+#include <Junkbotix_Common.h>
 
 /** Beacon PWM settings */
 #define BEACON_PWM_FREQUENCY    1000

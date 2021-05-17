@@ -12,11 +12,13 @@ const char index_html[] PROGMEM = R"=====(
             }
         </style>
         <script>
-            // NOTE: This script is untested currently, and is not secure...
-            //       USE AT OWN RISK
+            // NOTE: This script is untested currently...USE AT OWN RISK
 
             // Geolocation interval in milliseconds
             var interval = 5000; 
+
+            // Client password
+            var password = document.getElementById("password");
 
             // Response messages textarea element
             var messages = document.getElementById("messages");
@@ -27,7 +29,7 @@ const char index_html[] PROGMEM = R"=====(
                 var longitude = position.coords.longitude;
                 var heading = position.coords.heading;
 
-                messages.value += "\nLat: ${latitude} °, Lon: ${longitude} °, Head: ${heading}";
+                messages.value += "\nLat: ${latitude} °, Lon: ${longitude} °, Hed: ${heading}";
 
                 var xhttp = new XMLHttpRequest();
 
@@ -37,7 +39,7 @@ const char index_html[] PROGMEM = R"=====(
                     }
                 };
 
-                xhttp.open("GET", "location?lat="+latitude+"&lon="+longitude+"&hed="+heading, true);
+                xhttp.open("GET", "location?pwd="+password.value+"&lat="+latitude+"&lon="+longitude+"&hed="+heading, true);
                 xhttp.send();
             }
 
@@ -67,7 +69,8 @@ const char index_html[] PROGMEM = R"=====(
                     }
                 };
 
-                xhttp.open("GET", "estop", true);
+                xhttp.open("GET", "estop?pwd="+password.value, true);
+
                 xhttp.send();
             }
         </script>        
@@ -77,6 +80,10 @@ const char index_html[] PROGMEM = R"=====(
             <center>
                 <h2>Junkbotix</h2>
                 <h2>Follow Me Robot Client</h2>
+                <div>
+                    <label for="pwd">Password:</label>
+                    <input id="password" name="pwd" type="text" />
+                </div>
                 <div>
                     <button class="button" onclick="estop()">!!! E-STOP !!!</button>
                 </div>

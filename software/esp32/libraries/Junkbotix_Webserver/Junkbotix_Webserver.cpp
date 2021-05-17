@@ -5,8 +5,17 @@
  *  http://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
-#include "Arduino.h"
 #include "Junkbotix_Webserver.h"
+
+/** Handler for checking client password against defined credentials */
+bool Junkbotix_Webserver::_checkPassword(AsyncWebServerRequest *request) {
+    if (request->getParam("password")->value() != CLIENT_PASSWORD) {
+        request->send(200, "text/plain", "Invalid client password received...");    
+        return false;
+    }
+
+    return true;
+}
 
 /** Request handler for the index page */
 void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
@@ -17,24 +26,28 @@ void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
 
 /** Request handler for the client's reporting of geolocation coordinates */
 void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
-    Serial.println("Handling request for client geolocation...");
-    Serial.println("");
+    if (_checkPassword(request)) {
+        Serial.println("Handling request for client geolocation...");
+        Serial.println("");
 
-    _lastClientPosition.latitude = request->arg("lat").toFloat();
-    _lastClientPosition.longitude = request->arg("lon").toFloat();
-    _lastClientPosition.heading = request->arg("hed").toFloat();
+        _lastClientPosition.latitude = request->arg("lat").toFloat();
+        _lastClientPosition.longitude = request->arg("lon").toFloat();
+        _lastClientPosition.heading = request->arg("hed").toFloat();
 
-    request->send(200, "text/plain", "Client geolocation request received...");    
+        request->send(200, "text/plain", "Client geolocation request received...");    
+    }
 }
 
 /** Request handler for an emergency stop */
 void Junkbotix_Webserver::_onEStopReq(AsyncWebServerRequest *request) {
-    Serial.println("Handling request for E-STOP...");
-    Serial.println("");
+    if (_checkPassword(request)) {
+        Serial.println("Handling request for E-STOP...");
+        Serial.println("");
 
-    _eStopFlag = true;
-    
-    request->send(200, "text/plain", "Client E-STOP request received...");    
+        _eStopFlag = true;
+        
+        request->send(200, "text/plain", "Client E-STOP request received...");    
+    }
 }
 
 /** Request handler for an unknown request */
@@ -127,4 +140,16 @@ void Junkbotix_Webserver::init() {
     WiFi.onEvent(_onWiFiStationConnected, SYSTEM_EVENT_AP_STACONNECTED);
 }
 
-Junkbotix_Webserver::Junkbotix_Webserver() {}
+Junkbotix_Webserver::Junkbotix_Webserver() {
+        /** SoftAP default network credentials */
+        _ssid = AS_WEBSERVER_SSID;
+        _password = AS_WEBSERVER_PASSWORD;
+
+        /** Default port for the Async Webserver */
+        _port = AS_WEBSERVER_PORT;
+
+        /** SoftAP default IP Addresses */
+        _local_ip = IPAddress.fromString(AS_WEBSERVER_LOCALIP);
+        _gateway = IPAddress.fromString(AS_WEBSERVER_GATEWAY);
+        _subnet = IPAddress.fromString(AS_WEBSERVER_SUBNET);
+}

@@ -5,8 +5,6 @@
  * http://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
-#include "Arduino.h"
-#include <Junkbotix_Common.h>
 #include "Junkbotix_Beacons.h"
 
 /**
