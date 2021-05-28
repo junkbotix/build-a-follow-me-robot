@@ -1,30 +1,28 @@
-/*
-    Build A "Follow-Me" Robot: Part 11 - Software
-
-    FMController.h - Firmware for the Junkbotix Build A "Follow-Me" Robot
-    Copyright (c) 2021 by Junkbotix
-    Licensed under the GNU Public License (GPL) Version 3
-    http://www.gnu.org/licenses/gpl-3.0.en.html
-
-    Recommended PWM GPIO pins on the ESP32 include:
-    2, 4, 12-19, 21-23, 25-27, 32-33
-*/
+/**
+ * Build A "Follow-Me" Robot: Part 11 - Software
+ *
+ * FMController.h - Firmware for the Junkbotix Build A "Follow-Me" Robot
+ * Copyright (c) 2021 by Junkbotix
+ * Licensed under the GNU Public License (GPL) Version 3
+ * http://www.gnu.org/licenses/gpl-3.0.en.html
+ *
+ * Recommended PWM GPIO pins on the ESP32 include:
+ * 2, 4, 12-19, 21-23, 25-27, 32-33
+ */
 
 #ifndef FMController_h
 #define FMController_h
 
-/** Framework Class Libraries */
+// Framework Class Libraries
 #include <Junkbotix_Common.h>
 #include <Junkbotix_Robot.h>
 #include <Junkbotix_Client.h>
 #include <Junkbotix_Webserver.h>
-#include <Junkbotix_Victor884.h>
 #include <Junkbotix_Beacons.h>
+#include <Junkbotix_Victor884.h>
 #include <Junkbotix_Etrex.h>
 
 /******************************************************************************/
-
-#define LED_BUILTIN     2   // pin 24 (controls ESP32 on-board LED)
 
 #define LEFT_MOTOR      32  // pin 7  (servo PPM output for Victor-884)
 #define RIGHT_MOTOR     33  // pin 8  (servo PPM output for Victor-884)
@@ -38,29 +36,28 @@
 /* State Machine States
 /******************************************************************************/
 
-#define WAIT_FOR_GPS                1
-#define WAIT_FOR_CLIENT_REQUEST     2
-#define GET_ONBOARD_GPS_DATA        4
-#define VALIDATE_CREDS              8
+#define WAIT_FOR_GPS                0x001
+#define INIT_WEB_SERVER             0x002
+#define WAIT_FOR_STATION_CONNECT    0x004
 
-#define HANDLE_INVALID_CREDS        16
-#define HANDLE_CURRENT_MESSAGE      32
-#define HANDLE_INVALID_MESSAGE      64
-#define HANDLE_POSITION_UPDATE      128
-#define HANDLE_MANUAL_CONTROL       256
-#define HANDLE_NAVIGATION           512
-#define HANDLE_MOVEMENT             1024
-#define HANDLE_ARRIVAL              2048
+#define CHECK_CLIENT_ESTOP          0x008
+#define GET_CLIENT_GEO_POSITION     0x010
+#define GET_ONBOARD_GEO_POSITION    0x020
 
-#define HCF_HALT                    9999
+#define HANDLE_POSITION_UPDATE      0x040
+#define HANDLE_NAVIGATION           0x080
+#define HANDLE_MOVEMENT             0x100
+#define HANDLE_ARRIVAL              0x200
+
+#define HCF_HALT                    0xFFF
 
 /******************************************************************************/
 /* Messages (Default and from Client Browser)
 /******************************************************************************/
 
-#define NO_MESSAGE                  1   // Default message
-#define POSITION_UPDATE             2   // From client browser, sent once per second, lat/lon/bearing
-#define MANUAL_CONTROL              4   // From client browser, sent ad-hoc, per user selection
+#define NO_MESSAGE                  0x1   // Default message
+#define POSITION_UPDATE             0x2   // From client browser, sent once per second, lat/lon/bearing
+#define MANUAL_CONTROL              0x4   // From client browser, sent ad-hoc, per user selection
 
 /******************************************************************************/
 /* Robot Server Responses

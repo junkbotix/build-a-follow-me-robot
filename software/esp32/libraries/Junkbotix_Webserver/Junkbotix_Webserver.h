@@ -1,17 +1,17 @@
 /**
- *  Junkbotix_Webserver.h - Web server library
- *  Copyright (c) 2021 by Junkbotix
- *  Licensed under the GNU Public License (GPL) Version 3
- *  http://www.gnu.org/licenses/gpl-3.0.en.html
+ * Build A "Follow-Me" Robot: Part 11 - Software
+ *
+ * Junkbotix_Webserver.h - Web server library
+ * Copyright (c) 2021 by Junkbotix
+ * Licensed under the GNU Public License (GPL) Version 3
+ * http://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
 #ifndef Junkbotix_Webserver_h
 #define Junkbotix_Webserver_h
 
-#include "Arduino.h"
-
 #include <WiFi.h>
-#include "ESPAsyncWebServer.h"
+#include <ESPAsyncWebServer.h>
 
 #include <Junkbotix_Common.h>
 
@@ -21,49 +21,62 @@
 class Junkbotix_Webserver {
     private:
     
-        /** SoftAP default network credentials */
-        char* _ssid;
-        char* _password;
+        // The Async Webserver
+        static AsyncWebServer _server;
 
-        /** Default port for the Async Webserver */
-        int _port;
+        // SoftAP default network credentials
+        static char* _ssid;
+        static char* _password;
 
-        /** SoftAP default IP Addresses */
-        IPAddress _local_ip;
-        IPAddress _gateway;
-        IPAddress _subnet;
+        // Default port for the Async Webserver
+        static int _port;
 
-        AsyncWebServer _server;
+        // SoftAP default IP Addresses
+        static IPAddress _localip;
+        static IPAddress _gateway;
+        static IPAddress _subnet;
 
-        /** Client geolocation position */
-        Position _lastClientPosition;
+        // Client geolocation position
+        static Position _lastClientPosition;
         
-        boolean _eStopFlag = false;
+        // Flags
+        static bool _isConnected;
+        static bool _isEStopped;
 
-        long _lastMillis = 0;
+        // Handlers for SoftAP startup and station connection
+        static void _onWiFiAPStart(WiFiEvent_t event, WiFiEventInfo_t info);
+        static void _onWiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info);
 
-        /** Handlers for SoftAP startup and station connection */
-        void _onWiFiAPStart(WiFiEvent_t event, WiFiEventInfo_t info);
-        void _onWiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info);
+        // Handler for client password checking
+        static bool _checkPassword(AsyncWebServerRequest *request);
 
-        /** Handler for client password checking */
-        bool _checkPassword(AsyncWebServerRequest *request);
-
-        /** Webserver request handlers */
-        void _onIndexReq(AsyncWebServerRequest *request);
-        void _onGeoLocationReq(AsyncWebServerRequest *request);
-        void _onEStopReq(AsyncWebServerRequest *request);
-        void _onNotFoundReq(AsyncWebServerRequest *request);
+        // Webserver request handlers
+        static void _onIndexReq(AsyncWebServerRequest *request);
+        static void _onGeoLocationReq(AsyncWebServerRequest *request);
+        static void _onEStopReq(AsyncWebServerRequest *request);
+        static void _onNotFoundReq(AsyncWebServerRequest *request);
 
     public:
 
         Junkbotix_Webserver();
 
+        // Methods for checking the status of the flags
+        bool isConnected();
+        bool isEStopped();
+
+        // Return the last reported geolocation position of the client
         Position getLastClientPosition();
 
+        // Set SoftAP network credentials
         void setCredentials(char* ssid, char* password);
-        void setPort(int port);
-        void setAddresses(IPAddress local_ip, IPAddress gateway, IPAddress subnet);
+
+        // Set the port for the Async Webserver
+        void setPort(unsigned int port);
+        
+        // Set SoftAP default IP Addresses
+        void setAddresses(String local_ip, String gateway, String subnet);
+        
+        // Initialize the SoftAP and Async Webserver
         void init();
 };
 

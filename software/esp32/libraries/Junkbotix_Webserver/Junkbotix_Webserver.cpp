@@ -7,7 +7,29 @@
 
 #include "Junkbotix_Webserver.h"
 
-/** Handler for checking client password against defined credentials */
+// The Async Webserver
+AsyncWebServer Junkbotix_Webserver::_server(0);
+
+// SoftAP default network credentials
+char*  Junkbotix_Webserver::_ssid;
+char*  Junkbotix_Webserver::_password;
+
+// Default port for the Async Webserver
+int  Junkbotix_Webserver::_port;
+
+// SoftAP default IP Addresses
+IPAddress Junkbotix_Webserver::_localip;
+IPAddress Junkbotix_Webserver::_gateway;
+IPAddress Junkbotix_Webserver::_subnet;
+
+// Client geolocation position
+Position Junkbotix_Webserver::_lastClientPosition;
+
+// Flags
+bool Junkbotix_Webserver::_isConnected;  // Set to true after station is connected
+bool Junkbotix_Webserver::_isEStopped;   // Set to true when emergency stop request is handled
+
+// Handler for checking client password against defined credentials
 bool Junkbotix_Webserver::_checkPassword(AsyncWebServerRequest *request) {
     if (request->getParam("password")->value() != CLIENT_PASSWORD) {
         request->send(200, "text/plain", "Invalid client password received...");    
@@ -17,14 +39,14 @@ bool Junkbotix_Webserver::_checkPassword(AsyncWebServerRequest *request) {
     return true;
 }
 
-/** Request handler for the index page */
+// Request handler for the index page
 void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
     Serial.println("Handling request for index page...");
     Serial.println("");
     request->send_P(200, "text/html", index_html);    
 }
 
-/** Request handler for the client's reporting of geolocation coordinates */
+// Request handler for the client's reporting of geolocation coordinates
 void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
     if (_checkPassword(request)) {
         Serial.println("Handling request for client geolocation...");
@@ -38,30 +60,28 @@ void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
     }
 }
 
-/** Request handler for an emergency stop */
+// Request handler for an emergency stop
 void Junkbotix_Webserver::_onEStopReq(AsyncWebServerRequest *request) {
     if (_checkPassword(request)) {
         Serial.println("Handling request for E-STOP...");
         Serial.println("");
 
-        _eStopFlag = true;
+        _isEStopped = true;
         
         request->send(200, "text/plain", "Client E-STOP request received...");    
     }
 }
 
-/** Request handler for an unknown request */
+// Request handler for an unknown request
 void Junkbotix_Webserver::_onNotFoundReq(AsyncWebServerRequest *request) {
     Serial.println("Handling unknown request...");
     Serial.println("");
     request->send_P(404, "text/html", e404_html);
 }
 
-/**
- * Once SoftAP is started, configure it
- */
+// Once the SoftAP is started, configure it
 void Junkbotix_Webserver::_onWiFiAPStart(WiFiEvent_t event, WiFiEventInfo_t info) {
-    WiFi.softAPConfig(_local_ip, _gateway, _subnet);
+    //WiFi.softAPConfig(_localip, _gateway, _subnet);
     Serial.println("SoftAP configured and waiting for station...");
     Serial.println("");
 }
@@ -98,32 +118,42 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
     Serial.print(_port);
     Serial.println("/");
     Serial.println("");    
+
+    _isConnected = true;
 }
 
-/** Return the last reported geolocation position of the client */
+bool Junkbotix_Webserver::isConnected() {
+    return _isConnected;
+}
+
+bool Junkbotix_Webserver::isEStopped() {
+    return _isEStopped;
+}
+
+// Return the last reported geolocation position of the client
 Position Junkbotix_Webserver::getLastClientPosition() {
     return _lastClientPosition;
 }
 
-/** Set SoftAP network credentials */
+// Set the SoftAP network credentials
 void Junkbotix_Webserver::setCredentials(char* ssid, char* password) {
     _ssid = ssid;
     _password = password;
 }
 
-/** Set the port for the Async Webserver */
-void Junkbotix_Webserver::setPort(int port) {
+// Set the port for the Async Webserver
+void Junkbotix_Webserver::setPort(unsigned int port) {
     _port = port;
 }
 
-/** Set the SoftAP IP Addresses */        
-void Junkbotix_Webserver::setAddresses(IPAddress local_ip, IPAddress gateway, IPAddress subnet) {
-    _local_ip = local_ip;
-    _gateway = gateway;
-    _subnet = subnet;
+// Set the SoftAP IP Addresses   
+void Junkbotix_Webserver::setAddresses(String localip, String gateway, String subnet) {
+    _localip.fromString(localip);
+    _gateway.fromString(gateway);
+    _subnet.fromString(subnet);
 }
 
-/** Initialize the SoftAP and Async Webserver */
+// Initialize the SoftAP and Async Webserver
 void Junkbotix_Webserver::init() {
     Serial.begin(115200);
     
@@ -131,25 +161,30 @@ void Junkbotix_Webserver::init() {
     Serial.println("Starting SoftAP...");
     Serial.println("");
 
+    // Initialize and instantiate the Async Webserver and SoftAP
     AsyncWebServer _server(_port);
 
     WiFi.softAP(_ssid, _password);
 
-    /* Handlers for SoftAP startup and station connection */
+    // Handlers for the SoftAP startup and station connection
     WiFi.onEvent(_onWiFiAPStart, SYSTEM_EVENT_AP_START);
     WiFi.onEvent(_onWiFiStationConnected, SYSTEM_EVENT_AP_STACONNECTED);
 }
 
 Junkbotix_Webserver::Junkbotix_Webserver() {
-        /** SoftAP default network credentials */
-        _ssid = AS_WEBSERVER_SSID;
-        _password = AS_WEBSERVER_PASSWORD;
+    // Set the flags default values
+    _isConnected = false;
+    _isEStopped = false;
 
-        /** Default port for the Async Webserver */
-        _port = AS_WEBSERVER_PORT;
+    // Set the SoftAP default network credentials
+    _ssid = AS_WEBSERVER_SSID;
+    _password = AS_WEBSERVER_PASSWORD;
 
-        /** SoftAP default IP Addresses */
-        _local_ip = IPAddress.fromString(AS_WEBSERVER_LOCALIP);
-        _gateway = IPAddress.fromString(AS_WEBSERVER_GATEWAY);
-        _subnet = IPAddress.fromString(AS_WEBSERVER_SUBNET);
+    // Set the default port for the Async Webserver
+    _port = AS_WEBSERVER_PORT;
+
+    // Set the SoftAP default IP Addresses
+    _localip.fromString(AS_WEBSERVER_LOCALIP);
+    _gateway.fromString(AS_WEBSERVER_GATEWAY);
+    _subnet.fromString(AS_WEBSERVER_SUBNET);
 }
