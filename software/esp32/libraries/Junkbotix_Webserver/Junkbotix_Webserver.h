@@ -18,6 +18,11 @@
 #include "pages/index_html.h"
 #include "pages/e404_html.h"
 
+// Response codes
+#define AS_WEBSERVER_RESPONSE_OK            200
+#define AS_WEBSERVER_RESPONSE_NOTFOUND      404
+
+// Web server library
 class Junkbotix_Webserver {
     private:
     
@@ -36,11 +41,16 @@ class Junkbotix_Webserver {
         static IPAddress _gateway;
         static IPAddress _subnet;
 
+        // Message to be sent to the client
+        static String _lastClientMessage;
+        static String _clientMessage;
+
         // Client geolocation position
         static Position _lastClientPosition;
         
         // Flags
         static bool _isConnected;
+        static bool _isAPStarted;
         static bool _isEStopped;
 
         // Handlers for SoftAP startup and station connection
@@ -50,8 +60,9 @@ class Junkbotix_Webserver {
         // Handler for client password checking
         static bool _checkPassword(AsyncWebServerRequest *request);
 
-        // Webserver request handlers
+        // Web server request handlers
         static void _onIndexReq(AsyncWebServerRequest *request);
+        static void _onGetMessageReq(AsyncWebServerRequest *request);
         static void _onGeoLocationReq(AsyncWebServerRequest *request);
         static void _onEStopReq(AsyncWebServerRequest *request);
         static void _onNotFoundReq(AsyncWebServerRequest *request);
@@ -61,8 +72,12 @@ class Junkbotix_Webserver {
         Junkbotix_Webserver();
 
         // Methods for checking the status of the flags
+        bool isAPStarted();
         bool isConnected();
         bool isEStopped();
+
+        // Set a message to be sent to the client (when requested)
+        void setClientMessage(String message);
 
         // Return the last reported geolocation position of the client
         Position getLastClientPosition();

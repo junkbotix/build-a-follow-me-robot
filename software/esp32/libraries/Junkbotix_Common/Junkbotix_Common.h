@@ -10,9 +10,7 @@
 #ifndef Junkbotix_Common_h
 #define Junkbotix_Common_h
 
-/******************************************************************************/
-/* Define GPIO for ESP32 on-board LED (pin 24)
-/******************************************************************************/
+// Define GPIO for ESP32 on-board LED (pin 24)
 #define LED_BUILTIN                 2                   
 
 /******************************************************************************/
@@ -34,10 +32,7 @@
 
 #define CLIENT_PASSWORD             "password12345"
 
-/******************************************************************************/
-/* GPS Position parameters
-/******************************************************************************/
-
+// GPS Position parameters
 struct Position {
     float latitude;
     float longitude;

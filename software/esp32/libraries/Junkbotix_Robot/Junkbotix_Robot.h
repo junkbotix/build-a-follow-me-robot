@@ -5,7 +5,7 @@
  * Copyright (c) 2021 by Junkbotix
  * Licensed under the GNU Public License (GPL) Version 3
  * http://www.gnu.org/licenses/gpl-3.0.en.html
-*/
+ */
 
 #ifndef Junkbotix_Robot_h
 #define Junkbotix_Robot_h
@@ -22,13 +22,13 @@ class Junkbotix_Robot {
     public:
         Junkbotix_Robot(int state);
 
-        void Halt();
+        void halt();
         
-        void SetState(int state);
-        int GetState();
+        void setState(int state);
+        int getState();
 
-        void SetPosition(float latitude, float longitude, float heading);
-        Position GetPosition();
+        void setPosition(float latitude, float longitude, float heading);
+        Position getPosition();
 };
 
 #endif

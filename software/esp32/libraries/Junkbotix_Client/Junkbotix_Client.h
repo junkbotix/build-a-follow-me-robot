@@ -20,8 +20,8 @@ class Junkbotix_Client {
     public:
         Junkbotix_Client();
 
-        void SetPosition(float latitude, float longitude, float heading);
-        Position GetPosition();
+        void setPosition(float latitude, float longitude, float heading);
+        Position getPosition();
 };
 
 #endif

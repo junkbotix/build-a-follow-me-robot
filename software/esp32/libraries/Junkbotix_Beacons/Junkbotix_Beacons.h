@@ -32,7 +32,9 @@
 
 // Interface library for LED and audible beacons
 class Junkbotix_Beacons {
+    
     private:
+
         unsigned int _gpio;
         unsigned int _mode;
         unsigned int _state;
@@ -49,6 +51,7 @@ class Junkbotix_Beacons {
         void _tick();
 
     public:
+
         Junkbotix_Beacons();
 
         void setGPIO(unsigned int gpio, unsigned int mode, bool oneshot);
