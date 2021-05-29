@@ -51,44 +51,4 @@
 
 #define HCF_HALT                    0xFFF
 
-/******************************************************************************/
-/* Messages (Default and from Client Browser)
-/******************************************************************************/
-
-// #define NO_MESSAGE                  0x1   // Default message
-// #define POSITION_UPDATE             0x2   // From client browser, sent once per second, lat/lon/bearing
-// #define MANUAL_CONTROL              0x4   // From client browser, sent ad-hoc, per user selection
-
-/******************************************************************************/
-/* Robot Server Responses
-/******************************************************************************/
-
-// #define CONTROLLER_PAGE             0   // Actual response is HTML/CSS/JS
-
-// #define VALID_CREDENTIALS           1   // Sent back when credentials from the
-//                                         // controller page match on-board values
-
-// #define INVALID_CREDENTIALS         2   // Sent back when credentials from the 
-//                                         // controller page do not match the 
-//                                         // on-board values
-
-// #define INVALID_MESSAGE             4   // Sent back when the message received 
-//                                         // doesn't match valid message types: 
-//                                         //      NO_MESSAGE, 
-//                                         //      POSITION_UPDATE, 
-//                                         //      MANUAL_CONTROL
-
-// #define NAVIGATING_MESSAGE          8   // Sent back when the robot is 
-//                                         // navigating to the client's position
-
-// #define MANUAL_CONTROL_MESSAGE      16  // Sent back when the client is using 
-//                                         // the manual controls 
-
-// #define ARRIVAL_MESSAGE             32  // Sent back when the robot arrives at 
-//                                         // the client's location
-
-// #define E_STOP_MESSAGE              999 // Sent back when the client manual 
-//                                         // control selected is the emergency 
-//                                         // stop button
-
 #endif                                        
