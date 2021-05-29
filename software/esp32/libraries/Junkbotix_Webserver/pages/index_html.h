@@ -15,7 +15,10 @@ const char index_html[] PROGMEM = R"=====(
             // NOTE: This script is untested currently...USE AT OWN RISK
 
             // Geolocation interval in milliseconds
-            var interval = 5000; 
+            var geolocInterval = 5000; 
+
+            // Message checking interval in milliseconds
+            var messageCheckInterval = 2500;
 
             // Client password
             var password = document.getElementById("password");
@@ -24,7 +27,7 @@ const char index_html[] PROGMEM = R"=====(
             var messages = document.getElementById("messages");
 
             // Browser geolocation successful, send coordinates back to robot
-            function success(position) {
+            function geosuccess(position) {
                 var latitude  = position.coords.latitude;
                 var longitude = position.coords.longitude;
                 var heading = position.coords.heading;
@@ -44,7 +47,7 @@ const char index_html[] PROGMEM = R"=====(
             }
 
             // Browser geolocation unsuccessful...
-            function error() {
+            function geoerror() {
                 messages.value += "\nUnable to get the client location...";
             }
 
@@ -55,8 +58,25 @@ const char index_html[] PROGMEM = R"=====(
                 // If it can, geolocate every {interval}
                 setInterval(function() {
                     messages.value += "\nLocating...";
-                    navigator.geolocation.getCurrentPosition(success, error);
-                }, interval);
+                    navigator.geolocation.getCurrentPosition(geosuccess, geoerror);
+                }, geolocInterval);
+
+                // Periodically get a set message from the robot and display it
+                setInterval(function() {
+                    var xhttp = new XMLHttpRequest();
+
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            if (this.responseText != "") {
+                                messages.value += "\n" + this.responseText;
+                            }
+                        }
+                    };
+
+                    xhttp.open("GET", "getmessage", true);
+
+                    xhttp.send();
+                }, messageCheckInterval);
             }
 
             // If the user presses the E-STOP button, send request to robot

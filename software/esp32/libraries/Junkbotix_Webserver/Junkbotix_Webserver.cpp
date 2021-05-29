@@ -66,7 +66,7 @@ void Junkbotix_Webserver::_onGetMessageReq(AsyncWebServerRequest *request) {
         if (_clientMessage != _lastClientMessage) {
             request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", _clientMessage);
         } else {
-            request->send(AS_WEBSERVER_RESPONSE_OK);
+            request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "");
         }   
     }
 }
@@ -81,7 +81,7 @@ void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
         _lastClientPosition.longitude = request->arg("lon").toFloat();
         _lastClientPosition.heading = request->arg("hed").toFloat();
 
-        request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "Client geolocation data saved...");    
+        request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "Client geolocation data updated...");    
     }
 }
 

@@ -155,9 +155,7 @@ void Junkbotix_Beacons::setDelays(unsigned int ondelay, unsigned int offdelay, u
     _pausedelay = pausedelay;
 }
 
-/**
- * Reset the state of a "one-shot" beacon to allow another cycle
- */
+// Reset the state of a "one-shot" beacon to allow another cycle
 void Junkbotix_Beacons::reset() {
     if (_oneshot) {
         _state = (_mode == BEACON_TOGGLE) ? BEACON_ON : BEACON_FADEIN;
