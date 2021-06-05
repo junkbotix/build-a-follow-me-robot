@@ -9,15 +9,12 @@
 
 #include "Junkbotix_Webserver.h"
 
-// The Async Webserver
-AsyncWebServer Junkbotix_Webserver::_server(0);
+// Initialize and instantiate the Async Webserver
+AsyncWebServer Junkbotix_Webserver::_server(AS_WEBSERVER_PORT);
 
 // SoftAP default network credentials
 char*  Junkbotix_Webserver::_ssid;
 char*  Junkbotix_Webserver::_password;
-
-// Default port for the Async Webserver
-int  Junkbotix_Webserver::_port;
 
 // SoftAP default IP Addresses
 IPAddress Junkbotix_Webserver::_localip;
@@ -134,7 +131,7 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
   
     // Start the server
     _server.begin();
-
+    
     // Give some help to the user
     Serial.println("Junkbotix FMRobot Webserver started...");
     Serial.println("");
@@ -144,7 +141,7 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
     Serial.print("...then browse to: http://");
     Serial.print(WiFi.softAPIP());
     Serial.print(":");
-    Serial.print(_port);
+    Serial.print(AS_WEBSERVER_PORT);
     Serial.println("/");
     Serial.println("");    
 
@@ -187,11 +184,6 @@ void Junkbotix_Webserver::setCredentials(char* ssid, char* password) {
     _password = password;
 }
 
-// Set the port for the Async Webserver
-void Junkbotix_Webserver::setPort(unsigned int port) {
-    _port = port;
-}
-
 // Set the SoftAP IP Addresses   
 void Junkbotix_Webserver::setAddresses(String localip, String gateway, String subnet) {
     _localip.fromString(localip);
@@ -201,14 +193,11 @@ void Junkbotix_Webserver::setAddresses(String localip, String gateway, String su
 
 // Initialize the SoftAP and Async Webserver
 void Junkbotix_Webserver::init() {
-    Serial.begin(115200);
-    
+
+    // Initialize and instantiate the SoftAP
     Serial.println("");
     Serial.println("Starting SoftAP...");
     Serial.println("");
-
-    // Initialize and instantiate the Async Webserver and SoftAP
-    AsyncWebServer _server(_port);
 
     WiFi.softAP(_ssid, _password);
 
@@ -230,9 +219,6 @@ Junkbotix_Webserver::Junkbotix_Webserver() {
     // Set the SoftAP default network credentials
     _ssid = AS_WEBSERVER_SSID;
     _password = AS_WEBSERVER_PASSWORD;
-
-    // Set the default port for the Async Webserver
-    _port = AS_WEBSERVER_PORT;
 
     // Set the SoftAP default IP Addresses
     _localip.fromString(AS_WEBSERVER_LOCALIP);

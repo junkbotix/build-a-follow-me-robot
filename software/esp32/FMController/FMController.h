@@ -16,6 +16,7 @@
 #include <Junkbotix_Client.h>
 #include <Junkbotix_Webserver.h>
 #include <Junkbotix_Beacons.h>
+#include <Junkbotix_Beacon_Style.h>
 #include <Junkbotix_Victor884.h>
 #include <Junkbotix_Etrex.h>
 
@@ -27,7 +28,7 @@
 
 #define LEFT_MOTOR      32  // pin 7  (servo PPM output for Victor-884)
 #define RIGHT_MOTOR     33  // pin 8  (servo PPM output for Victor-884)
-#define LED_BEACON      25  // pin 9  (TIP102 switch to flash LED beacon)
+#define VIS_BEACON      25  // pin 9  (TIP102 switch to flash LED beacon)
 #define AUD_BEACON      26  // pin 10 (TIP102 switch to beep the audible beacon)
 
 #define ETREX_RX        16  // pin 27 (connected to MAX3232 converter TX pin)
@@ -40,14 +41,17 @@
 #define WAIT_FOR_GPS                0x001
 #define INIT_WEB_SERVER             0x002
 #define WAIT_FOR_STATION_CONNECT    0x004
+#define ACK_STATION_CONNECT         0x008
 
-#define CHECK_CLIENT_ESTOP          0x008
-#define GET_CLIENT_GEO_POSITION     0x010
-#define GET_ROBOT_GEO_POSITION      0x020
-#define UPDATE_ROBOT_NAVIGATION     0x040
+#define RESET_BEACONS               0x010
 
-#define HANDLE_MOVEMENT             0x080
-#define HANDLE_ARRIVAL              0x100
+#define CHECK_CLIENT_ESTOP          0x020
+#define GET_CLIENT_GEO_POSITION     0x040
+#define GET_ROBOT_GEO_POSITION      0x080
+#define UPDATE_ROBOT_NAVIGATION     0x100
+
+#define HANDLE_MOVEMENT             0x200
+#define HANDLE_ARRIVAL              0x400
 
 #define HCF_HALT                    0xFFF
 

@@ -39,4 +39,17 @@ struct Position {
     float heading;
 };
 
+static void debug_blink() {
+    static long lastMillis = 0;
+    static int ledState = LOW;
+
+    // Simple blink-without-delay functionality to blink on-board LED for status
+    if (millis() != lastMillis && millis() - lastMillis > 1000) {
+        pinMode(LED_BUILTIN, OUTPUT);
+        digitalWrite(LED_BUILTIN, ledState);
+        ledState = !ledState;
+        lastMillis = millis();
+    }
+}
+
 #endif

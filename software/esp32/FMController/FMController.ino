@@ -21,50 +21,53 @@ Junkbotix_Webserver FMWebserver;
 Junkbotix_Victor884 LeftMotor(LEFT_MOTOR);
 Junkbotix_Victor884 RightMotor(RIGHT_MOTOR);
 
-// Instantiate visible (LED) beacon interface objects 
-Junkbotix_Beacons BlinkBeacon;
-Junkbotix_Beacons FlashBeacon;
-Junkbotix_Beacons BreathBeacon;
+// Instantiate the "blinking" beacon style object
+Junkbotix_Beacon_Style BlinkBeaconStyle;
 
-// Instantiate audible beacon interface objects
-Junkbotix_Beacons AudibleBeacon;
-Junkbotix_Beacons AudibleFlashBeacon;
+// Instantiate the "flashing" beacon style object
+Junkbotix_Beacon_Style FlashBeaconStyle;
+
+// Instantiate the "breathing" beacon style object
+Junkbotix_Beacon_Style BreathBeaconStyle;
+
+// Instantiate beacon interface objects
+Junkbotix_Beacons VisibleBeacon(VIS_BEACON, 0);
+//Junkbotix_Beacons AudibleBeacon(AUD_BEACON, 1);
 
 // Instantiate Etrex interface object
 Junkbotix_Etrex EtrexGPS(ETREX_TX, ETREX_RX);
 
 void setup() {
+    // Initialize hardware serial port
+    Serial.begin(115200);
 
-    // Setup a "flashing" LED beacon
-    FlashBeacon.setGPIO(LED_BEACON, BEACON_TOGGLE, false);
-    FlashBeacon.setRepeat(2);
-    FlashBeacon.setDelays(75, 500, 1000);
+    // Set up the "flashing" beacon style object
+    FlashBeaconStyle.setRepeat(2);
+    FlashBeaconStyle.setOnDelay(75);
+    FlashBeaconStyle.setOffDelay(500);
+    FlashBeaconStyle.setPauseDelay(1000);
 
-    // Setup a "breathing" LED beacon
-    BreathBeacon.setGPIO(LED_BEACON, BEACON_BREATH, false);
-    BreathBeacon.setDelays(10, 10, 0);
-
-    // Setup default long-pulse audible beacon
-    AudibleBeacon.setGPIO(AUD_BEACON, BEACON_TOGGLE, false);
-
-    // Setup a short-pulse audible beacon
-    AudibleFlashBeacon.setGPIO(AUD_BEACON, BEACON_TOGGLE, false);
-    AudibleFlashBeacon.setRepeat(2);
-    AudibleFlashBeacon.setDelays(75, 500, 1000);
+    // Set up the "breathing" beacon style object
+    BreathBeaconStyle.setOnDelay(5);
+    BreathBeaconStyle.setOffDelay(5);
 }
 
 void loop() {
-    
+    //debug_blink();
+
     switch (FMRobot.getState()) {
         case WAIT_FOR_GPS:
             if (true) {
                 // If the GPS is ready, flash and beep beacons 2x
-                FlashBeacon.blink();
-                AudibleFlashBeacon.blink();
-                FMRobot.setState(INIT_WEB_SERVER);
+                VisibleBeacon.tick(FlashBeaconStyle);
+                //AudibleFlashBeacon.tick(FlashBeaconStyle);
+                //if (VisibleBeacon.isPaused() && AudibleFlashBeacon.isPaused()) {
+                if (VisibleBeacon.isPaused()) {
+                    FMRobot.setState(INIT_WEB_SERVER);
+                }
             } else {
                 // If the GPS isn't ready, fade in/out the LED beacon (breathing)
-                BreathBeacon.breath();
+                VisibleBeacon.tick(BreathBeaconStyle);
             }
 
             break;
@@ -77,14 +80,32 @@ void loop() {
 
         case WAIT_FOR_STATION_CONNECT:
             if (FMWebserver.isConnected()) {
-                // When a client (station) connects to the AP, flash/beep beacons 2x
-                FlashBeacon.blink();
-                AudibleFlashBeacon.blink();
-                FMRobot.setState(CHECK_CLIENT_ESTOP);
+                // Acknowledge station connect
+                FMRobot.setState(ACK_STATION_CONNECT);
             } else {
                 // If a client is not connected yet, fade in/out the LED beacon (breathing)
-                BreathBeacon.breath();
+                VisibleBeacon.tick();
             }
+            break;
+
+        case ACK_STATION_CONNECT:
+            // When a client (station) connects to the AP, flash/beep beacons 2x
+            VisibleBeacon.tick(FlashBeaconStyle);
+            //AudibleFlashBeacon.blink(FlashBeaconStyle);
+            //if (VisibleBeacon.isPaused() && AudibleFlashBeacon.isPaused()) {
+            if (VisibleBeacon.isPaused()) {
+                // Turn off all defined beacons
+                FMRobot.setState(RESET_BEACONS);
+            }
+            break;
+
+        case RESET_BEACONS:
+            // Turn off all of the beacons
+            VisibleBeacon.off();
+            //AudibleBeacon.off();
+
+            // Then start checking for commands from the client, first the E-STOP        
+            FMRobot.setState(CHECK_CLIENT_ESTOP);
             break;
 
         case CHECK_CLIENT_ESTOP:
@@ -93,7 +114,7 @@ void loop() {
             // But if an E-STOP request occurred, set a state to halt everything
             if (FMWebserver.isEStopped()) FMRobot.setState(HCF_HALT);
             break;
-
+        
         case GET_CLIENT_GEO_POSITION:
             /*
             Read the client's GPS data (moving average filtered on client):
@@ -157,7 +178,7 @@ void loop() {
             */
             FMWebserver.setClientMessage("!!! E-STOP - HALTED !!!");
             FMRobot.halt();
-            BlinkBeacon.blink();
+            //VisibleBeacon.tick(BlinkBeaconStyle);
 
             // At this point power must be cycled (reset)
     }

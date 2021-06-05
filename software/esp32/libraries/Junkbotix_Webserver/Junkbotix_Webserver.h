@@ -33,9 +33,6 @@ class Junkbotix_Webserver {
         static char* _ssid;
         static char* _password;
 
-        // Default port for the Async Webserver
-        static int _port;
-
         // SoftAP default IP Addresses
         static IPAddress _localip;
         static IPAddress _gateway;
@@ -85,9 +82,6 @@ class Junkbotix_Webserver {
         // Set SoftAP network credentials
         void setCredentials(char* ssid, char* password);
 
-        // Set the port for the Async Webserver
-        void setPort(unsigned int port);
-        
         // Set SoftAP default IP Addresses
         void setAddresses(String local_ip, String gateway, String subnet);
         
