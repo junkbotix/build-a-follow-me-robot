@@ -32,7 +32,7 @@ Junkbotix_Beacon_Style BreathBeaconStyle;
 
 // Instantiate beacon interface objects
 Junkbotix_Beacons VisibleBeacon(VIS_BEACON, 0);
-//Junkbotix_Beacons AudibleBeacon(AUD_BEACON, 1);
+Junkbotix_Beacons AudibleBeacon(AUD_BEACON, 1);
 
 // Instantiate Etrex interface object
 Junkbotix_Etrex EtrexGPS(ETREX_TX, ETREX_RX);
@@ -48,6 +48,7 @@ void setup() {
     FlashBeaconStyle.setPauseDelay(1000);
 
     // Set up the "breathing" beacon style object
+    BreathBeaconStyle.setStep(1);
     BreathBeaconStyle.setOnDelay(5);
     BreathBeaconStyle.setOffDelay(5);
 }
@@ -60,9 +61,8 @@ void loop() {
             if (true) {
                 // If the GPS is ready, flash and beep beacons 2x
                 VisibleBeacon.tick(FlashBeaconStyle);
-                //AudibleFlashBeacon.tick(FlashBeaconStyle);
-                //if (VisibleBeacon.isPaused() && AudibleFlashBeacon.isPaused()) {
-                if (VisibleBeacon.isPaused()) {
+                AudibleBeacon.tick(FlashBeaconStyle);
+                if (VisibleBeacon.isPaused() && AudibleBeacon.isPaused()) {
                     FMRobot.setState(INIT_WEB_SERVER);
                 }
             } else {
@@ -84,17 +84,15 @@ void loop() {
                 FMRobot.setState(ACK_STATION_CONNECT);
             } else {
                 // If a client is not connected yet, fade in/out the LED beacon (breathing)
-                VisibleBeacon.tick();
+                VisibleBeacon.tick(BreathBeaconStyle);
             }
             break;
 
         case ACK_STATION_CONNECT:
             // When a client (station) connects to the AP, flash/beep beacons 2x
             VisibleBeacon.tick(FlashBeaconStyle);
-            //AudibleFlashBeacon.blink(FlashBeaconStyle);
-            //if (VisibleBeacon.isPaused() && AudibleFlashBeacon.isPaused()) {
-            if (VisibleBeacon.isPaused()) {
-                // Turn off all defined beacons
+            AudibleBeacon.tick(FlashBeaconStyle);
+            if (VisibleBeacon.isPaused() && AudibleBeacon.isPaused()) {
                 FMRobot.setState(RESET_BEACONS);
             }
             break;
@@ -178,7 +176,7 @@ void loop() {
             */
             FMWebserver.setClientMessage("!!! E-STOP - HALTED !!!");
             FMRobot.halt();
-            //VisibleBeacon.tick(BlinkBeaconStyle);
+            VisibleBeacon.tick(BlinkBeaconStyle);
 
             // At this point power must be cycled (reset)
     }

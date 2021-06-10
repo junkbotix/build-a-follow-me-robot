@@ -15,7 +15,7 @@
 #include <Junkbotix_Beacon_Style.h>
 
 // Beacon PWM settings
-#define BEACON_PWM_FREQUENCY    1000
+#define BEACON_PWM_FREQUENCY    10000
 #define BEACON_PWM_CHANNEL      0
 #define BEACON_PWM_RESOLUTION   8
 

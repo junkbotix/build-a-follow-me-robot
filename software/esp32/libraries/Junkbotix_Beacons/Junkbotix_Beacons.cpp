@@ -45,59 +45,52 @@ void Junkbotix_Beacons::tick() {
     static long lastMillis = 0;
     static int reps = _style.getRepeat();
     static int pwm = 0;
-    long delay;
+    static long delay = 0;
     
-    switch (_state) {
-        case BEACON_FADEIN:
-            ledcWrite(_channel, pwm);
-            delay = _style.getOnDelay();            // milliseconds to wait between steps when fading in
-            break;
-
-        case BEACON_FADEOUT:
-            ledcWrite(_channel, pwm);
-            delay = _style.getOffDelay();           // milliseconds to wait between steps when fading out
-            break;
-
-        case BEACON_PAUSED:
-            // a one-shot only happens once, until it is reset
-            _state = _style.getOneshot() ? BEACON_FADEIN : _state;
-            delay = _style.getPauseDelay();         // milliseconds to pause
-            break;
-        
-        case BEACON_SHOT:                           // break intentionally omitted
-        default:
-            return;
-    }
-
     if (millis() != lastMillis && millis() - lastMillis > delay) {
+
         lastMillis = millis();
 
         switch (_state) {
             case BEACON_FADEIN:
+                delay = _style.getOnDelay();            // milliseconds to wait between steps when fading in
                 pwm += _style.getStep();
                 if (pwm >= 255) {
                     pwm = 255;
                     _state = BEACON_FADEOUT;
                 }
+                ledcWrite(_channel, pwm);
                 break;
 
             case BEACON_FADEOUT:
+                delay = _style.getOffDelay();           // milliseconds to wait between steps when fading out
                 pwm -= _style.getStep();
                 if (pwm <= 0) {
                     pwm = 0;
+                    reps--;
                     if (reps <= 0) {
                         _state = BEACON_PAUSED;
                     } else {
                         _state = BEACON_FADEIN;
                     }
-                    reps--;
                 }
+                ledcWrite(_channel, pwm);
                 break;
 
             case BEACON_PAUSED:
+                delay = _style.getPauseDelay();         // milliseconds to pause
                 reps = _style.getRepeat();
-                _state = BEACON_FADEIN;
+    
+                // a one-shot only happens once, until it is reset
+                _state = _style.getOneshot() ? BEACON_SHOT : BEACON_FADEIN;
+    
                 break;
+
+            case BEACON_SHOT:                           
+                // break intentionally omitted
+    
+            default:
+                return;
         }
     }
 }
