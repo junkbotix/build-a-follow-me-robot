@@ -21,68 +21,76 @@ void Junkbotix_Beacons::off() {
 
 // Reset the state of a "one-shot" beacon to allow another cycle
 void Junkbotix_Beacons::reset() {
-    _state = _style.getOneshot() ? BEACON_FADEIN : _state;
+    _curr_state = _style.getOneshot() ? BEACON_FADEIN : _curr_state;
 }
 
 // Returns true if the beacon is a one-shot and it's cycle is complete and over
 bool Junkbotix_Beacons::isShot() {
-    return (_state == BEACON_SHOT);
+    return (_curr_state == BEACON_SHOT);
 }
 
 // Returns true if the beacon is currently "paused" in it's cycle
 bool Junkbotix_Beacons::isPaused() {
-    return (_state == BEACON_PAUSED);
+    return (_curr_state == BEACON_PAUSED);
 }
 
-// Implementation method for the non-blocking beacon state-machine control process
+/**
+ * Wrapper method for the non-blocking beacon state-machine control process
+ * 
+ * @param style Junkbotix_Beacon_Style style object defining the style for the beacon
+ */
 void Junkbotix_Beacons::tick(Junkbotix_Beacon_Style style) {
     _style = style;
     tick();
 }
 
+// Implementation method for the non-blocking beacon state-machine stepping control process
 void Junkbotix_Beacons::tick() {
 
-    static long lastMillis = 0;
-    static int reps = _style.getRepeat();
-    static int pwm = 0;
-    static long delay = 0;
-    
-    if (millis() != lastMillis && millis() - lastMillis > delay) {
+    if (millis() != _lastMillis && millis() - _lastMillis > _delay) {
 
-        lastMillis = millis();
+        _curr_state = _next_state;
 
-        switch (_state) {
+        _lastMillis = millis();
+
+        switch (_curr_state) {
+
+            case BEACON_INIT:
+                _reps = _style.getRepeat();
+                _next_state = BEACON_FADEIN;
+                break;
+
             case BEACON_FADEIN:
-                delay = _style.getOnDelay();            // milliseconds to wait between steps when fading in
-                pwm += _style.getStep();
-                if (pwm >= 255) {
-                    pwm = 255;
-                    _state = BEACON_FADEOUT;
+                _delay = _style.getOnDelay();            // milliseconds to wait between steps when fading in
+                _pwm += _style.getStep();
+                if (_pwm >= 255) {
+                    _pwm = 255;
+                    _next_state = BEACON_FADEOUT;
                 }
-                ledcWrite(_channel, pwm);
+                ledcWrite(_channel, _pwm);
                 break;
 
             case BEACON_FADEOUT:
-                delay = _style.getOffDelay();           // milliseconds to wait between steps when fading out
-                pwm -= _style.getStep();
-                if (pwm <= 0) {
-                    pwm = 0;
-                    reps--;
-                    if (reps <= 0) {
-                        _state = BEACON_PAUSED;
+                _delay = _style.getOffDelay();           // milliseconds to wait between steps when fading out
+                _pwm -= _style.getStep();
+                if (_pwm <= 0) {
+                    _pwm = 0;
+                    _reps--;
+                    if (_reps <= 0) {
+                        _next_state = BEACON_PAUSED;
                     } else {
-                        _state = BEACON_FADEIN;
+                        _next_state = BEACON_FADEIN;
                     }
                 }
-                ledcWrite(_channel, pwm);
+                ledcWrite(_channel, _pwm);
                 break;
 
             case BEACON_PAUSED:
-                delay = _style.getPauseDelay();         // milliseconds to pause
-                reps = _style.getRepeat();
+                _delay = _style.getPauseDelay();         // milliseconds to pause
+                _reps = _style.getRepeat();
     
                 // a one-shot only happens once, until it is reset
-                _state = _style.getOneshot() ? BEACON_SHOT : BEACON_FADEIN;
+                _next_state = _style.getOneshot() ? BEACON_SHOT : BEACON_FADEIN;
     
                 break;
 
@@ -95,12 +103,17 @@ void Junkbotix_Beacons::tick() {
     }
 }
 
+/**
+ * Constructor to instantiate the beacon object, setting the GPIO pin and PWM channel to use
+ * 
+ * @param gpio GPIO pin attached to the beacon (default = LED_BUILTIN)
+ * @param channel PWM channel for the beacon (default = BEACON_PWM_CHANNEL)
+ */
 Junkbotix_Beacons::Junkbotix_Beacons(unsigned int gpio = LED_BUILTIN, unsigned int channel = BEACON_PWM_CHANNEL) {
 
     _gpio = gpio;
     _channel = channel;
-    _state = BEACON_FADEIN;
-
+    
     // Setup the hardware GPIO and turn off the beacon
     pinMode(_gpio, OUTPUT);
 

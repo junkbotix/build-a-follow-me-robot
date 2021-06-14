@@ -62,7 +62,9 @@ void loop() {
                 // If the GPS is ready, flash and beep beacons 2x
                 VisibleBeacon.tick(FlashBeaconStyle);
                 AudibleBeacon.tick(FlashBeaconStyle);
+                
                 if (VisibleBeacon.isPaused() && AudibleBeacon.isPaused()) {
+                    Serial.println("gps ready");
                     FMRobot.setState(INIT_WEB_SERVER);
                 }
             } else {
@@ -100,7 +102,7 @@ void loop() {
         case RESET_BEACONS:
             // Turn off all of the beacons
             VisibleBeacon.off();
-            //AudibleBeacon.off();
+            AudibleBeacon.off();
 
             // Then start checking for commands from the client, first the E-STOP        
             FMRobot.setState(CHECK_CLIENT_ESTOP);

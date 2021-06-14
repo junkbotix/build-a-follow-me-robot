@@ -20,11 +20,58 @@ const char index_html[] PROGMEM = R"=====(
             // Message checking interval in milliseconds
             var messageCheckInterval = 2500;
 
-            // Client password
-            var password = document.getElementById("password");
-
             // Response messages textarea element
             var messages = document.getElementById("messages");
+
+            // Send an xhttp response message to server and listen for the response
+            function doxhttp(method, node, response) {
+                var xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        messages.value += "\n" + this.responseText;
+                    }
+                };
+        
+                // Get client password setting
+                var password = document.getElementById("password");
+
+                xhttp.open("GET", node+"?pwd="+password.value+response, true);
+                xhttp.send();
+
+            }
+
+            /*******************************************************************************/
+            // The following generator functions originally from: 
+            //   https://stackoverflow.com/questions/6878761/javascript-how-to-create-random-longitude-and-latitudes            
+            /*******************************************************************************/
+
+            // LATITUDE -90 to +90
+            function genLatitude() {
+                var num = (Math.random()*90).toFixed(6);
+                var posorneg = Math.floor(Math.random());
+                if (posorneg == 0) {
+                    num = num * -1;
+                }
+                return num;
+            }
+
+            // LONGITUDE -180 to + 180
+            function genLongitude() {
+                var num = (Math.random()*180).toFixed(6);
+                var posorneg = Math.floor(Math.random());
+                if (posorneg == 0) {
+                    num = num * -1;
+                }
+                return num;
+            }
+
+            // HEADING 0 to +359
+            function genHeading() {
+                return (Math.random()*360).toFixed(0);
+            }
+
+            /*******************************************************************************/
 
             // Browser geolocation successful, send coordinates back to robot
             function geosuccess(position) {
@@ -34,16 +81,7 @@ const char index_html[] PROGMEM = R"=====(
 
                 messages.value += "\nLat: ${latitude} °, Lon: ${longitude} °, Hed: ${heading}";
 
-                var xhttp = new XMLHttpRequest();
-
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        messages.value += "\n" + this.responseText;
-                    }
-                };
-
-                xhttp.open("GET", "location?pwd="+password.value+"&lat="+latitude+"&lon="+longitude+"&hed="+heading, true);
-                xhttp.send();
+                doxhttp("GET", "location", "&lat="+latitude+"&lon="+longitude+"&hed="+heading);
             }
 
             // Browser geolocation unsuccessful...
@@ -51,47 +89,40 @@ const char index_html[] PROGMEM = R"=====(
                 messages.value += "\nUnable to get the client location...";
             }
 
-            // Check to see if browser can use geolocation
-            if (!navigator.geolocation) {
-                messages.value += "\nGeolocation is not supported by your browser...";
-            } else {
-                // If it can, geolocate every {interval}
-                setInterval(function() {
-                    messages.value += "\nLocating...";
-                    navigator.geolocation.getCurrentPosition(geosuccess, geoerror);
-                }, geolocInterval);
+            function dogeolocation() {
+                if (!document.getElementById("fakegps").value) {
+                    // Attempt to get actual GPS coordinates from browser
+                    if (!navigator.geolocation) {
+                        messages.value += "\nGeolocation is not supported by your browser...";
+                    } else {
+                        messages.value += "\nLocating...";
+                        navigator.geolocation.getCurrentPosition(geosuccess, geoerror);
+                    }
+                } else {
+                    // Generate and send some fake coordinate values
+                    messages.value += "\n(FAKE) Locating...";
 
-                // Periodically get a set message from the robot and display it
-                setInterval(function() {
-                    var xhttp = new XMLHttpRequest();
-
-                    xhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            if (this.responseText != "") {
-                                messages.value += "\n" + this.responseText;
-                            }
+                    geosuccess({
+                        coords: {
+                            latitude: genLatitude(),
+                            longitude: genLongitude(),
+                            heading: genHeading()
                         }
-                    };
-
-                    xhttp.open("GET", "getmessage", true);
-
-                    xhttp.send();
-                }, messageCheckInterval);
+                    });
+                }
             }
+
+            // Geolocate every {interval}
+            setInterval(dogeolocation, geolocInterval);
+
+            // Periodically get a set message from the robot and display it
+            setInterval(function() {
+                doxhttp("GET", "getmessage");
+            }, messageCheckInterval);
 
             // If the user presses the E-STOP button, send request to robot
             function estop() {
-                var xhttp = new XMLHttpRequest();
-
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        messages.value += "\n" + this.responseText;
-                    }
-                };
-
-                xhttp.open("GET", "estop?pwd="+password.value, true);
-
-                xhttp.send();
+                doxhttp("GET", "estop");
             }
         </script>        
     </head>
@@ -103,6 +134,10 @@ const char index_html[] PROGMEM = R"=====(
                 <div>
                     <label for="pwd">Password:</label>
                     <input id="password" name="pwd" type="text" />
+                </div>
+                <div>
+                    <input id="fakegps" type="checkbox" name="sendfakegps" checked>
+                    <label for="sendfakegps">Send Fake GPS Coords?</label>                    
                 </div>
                 <div>
                     <button class="button" onclick="estop()">!!! E-STOP !!!</button>
