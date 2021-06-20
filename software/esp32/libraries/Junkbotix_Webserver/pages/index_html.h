@@ -9,36 +9,46 @@ const char index_html[] PROGMEM = R"=====(
                 font-weight: bold;
                 width: 100%;
                 margin-bottom: 1em;
-            }
+            }            
+            #messages {
+                width: 99%;
+                max-width: 99%;
+            } 
         </style>
         <script>
-            // NOTE: This script is untested currently...USE AT OWN RISK
+            // NOTE: This script is incomplete...USE AT YOUR OWN RISK
 
-            // Geolocation interval in milliseconds
-            var geolocInterval = 5000; 
+            // Client e-stopped flag
+            var isEstopped = false;
 
-            // Message checking interval in milliseconds
-            var messageCheckInterval = 2500;
+            // Geolocation interval period in milliseconds
+            var geolocPeriod = 5000; 
 
-            // Response messages textarea element
-            var messages = document.getElementById("messages");
+            // Message checking interval period in milliseconds
+            var messageCheckPeriod = 2500;
+
+            // Add a message to textarea element, scroll to bottom
+            function addMessage(message) {
+                document.getElementById("messages").value += "\n" + message;
+                messages.scrollTop = messages.scrollHeight;
+            }
 
             // Send an xhttp response message to server and listen for the response
-            function doxhttp(method, node, response) {
+            function doxhttp(method = "GET", node = "", response = "") {
                 var xhttp = new XMLHttpRequest();
 
                 xhttp.onreadystatechange = function() {
+                    // Send response messages to textarea element
                     if (this.readyState == 4 && this.status == 200) {
-                        messages.value += "\n" + this.responseText;
+                        addMessage(this.responseText);
                     }
                 };
         
                 // Get client password setting
-                var password = document.getElementById("password");
+                var password = document.getElementById("password").value;
 
-                xhttp.open("GET", node+"?pwd="+password.value+response, true);
+                xhttp.open(method, node+"?pwd="+password+response, true);
                 xhttp.send();
-
             }
 
             /*******************************************************************************/
@@ -74,56 +84,68 @@ const char index_html[] PROGMEM = R"=====(
             /*******************************************************************************/
 
             // Browser geolocation successful, send coordinates back to robot
-            function geosuccess(position) {
+            function geoSuccess(position) {
                 var latitude  = position.coords.latitude;
                 var longitude = position.coords.longitude;
                 var heading = position.coords.heading;
 
-                messages.value += "\nLat: ${latitude} °, Lon: ${longitude} °, Hed: ${heading}";
+                // Send to messages textarea element°
+                addMessage("Loc: "+latitude+", "+longitude+" ["+heading+"]");
 
                 doxhttp("GET", "location", "&lat="+latitude+"&lon="+longitude+"&hed="+heading);
             }
 
             // Browser geolocation unsuccessful...
-            function geoerror() {
-                messages.value += "\nUnable to get the client location...";
+            function geoError() {
+                // Send to messages textarea element
+                addMessage("Unable to get the client location...");
             }
 
-            function dogeolocation() {
+            function doGeolocation() {
+
                 if (!document.getElementById("fakegps").value) {
                     // Attempt to get actual GPS coordinates from browser
                     if (!navigator.geolocation) {
-                        messages.value += "\nGeolocation is not supported by your browser...";
+                        addMessage("Geolocation is not supported by your browser...");
                     } else {
-                        messages.value += "\nLocating...";
-                        navigator.geolocation.getCurrentPosition(geosuccess, geoerror);
+                        addMessage("Locating...");
+                        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
                     }
                 } else {
-                    // Generate and send some fake coordinate values
-                    messages.value += "\n(FAKE) Locating...";
+                    // Generate and send some simulated coordinate values
+                    addMessage("[S] Locating...");
 
-                    geosuccess({
+                    geoSuccess({
                         coords: {
                             latitude: genLatitude(),
                             longitude: genLongitude(),
                             heading: genHeading()
                         }
                     });
-                }
+                }                
             }
+        
+            var intervalCount = 0;
 
-            // Geolocate every {interval}
-            setInterval(dogeolocation, geolocInterval);
+            var clientInterval = setInterval(function() {
+                if (intervalCount == messageCheckPeriod) {
+                    // Periodically get message from the robot and display it
+                    doxhttp("GET", "getmessage");
+                } else if (intervalCount == geolocPeriod) {
+                    // Geolocate
+                    if (!isEstopped) doGeolocation();
+                    intervalCount = 0;
+                }
 
-            // Periodically get a set message from the robot and display it
-            setInterval(function() {
-                doxhttp("GET", "getmessage");
-            }, messageCheckInterval);
+                intervalCount += 100;
+            }, 100);
 
             // If the user presses the E-STOP button, send request to robot
             function estop() {
                 doxhttp("GET", "estop");
+                isEstopped = true;
             }
+
         </script>        
     </head>
     <body>
@@ -144,7 +166,7 @@ const char index_html[] PROGMEM = R"=====(
                 </div>
             </center>
             <div>
-                <textarea id="messages" rows=40 cols=80 autofocus></textarea>
+                <textarea id="messages" rows=15></textarea>
             </div>
         </div>
     </body>

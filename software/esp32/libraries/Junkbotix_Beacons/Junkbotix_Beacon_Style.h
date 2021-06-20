@@ -18,6 +18,7 @@ class Junkbotix_Beacon_Style {
     
     private:
 
+        String _name;
         unsigned int _repeat;
         unsigned int _step;
         unsigned int _ondelay;
@@ -27,6 +28,7 @@ class Junkbotix_Beacon_Style {
 
     public:
 
+        void setName(String name);
         void setRepeat(unsigned int repeat);
         void setStep(unsigned int step);
         void setOnDelay(unsigned int ondelay);
@@ -34,6 +36,7 @@ class Junkbotix_Beacon_Style {
         void setPauseDelay(unsigned int pausedelay);
         void setOneshot(bool oneshot);
 
+        String getName();
         unsigned int getRepeat();
         unsigned int getStep();
         unsigned int getOnDelay();

@@ -53,6 +53,7 @@
 #define HANDLE_MOVEMENT             0x200
 #define HANDLE_ARRIVAL              0x400
 
+#define INIT_HCF_HALT               0xEEE
 #define HCF_HALT                    0xFFF
 
 #endif                                        

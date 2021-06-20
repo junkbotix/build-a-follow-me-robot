@@ -50,9 +50,10 @@ class Junkbotix_Webserver {
         static bool _isAPStarted;
         static bool _isEStopped;
 
-        // Handlers for SoftAP startup and station connection
+        // Handlers for SoftAP startup and station connection/disconnection
         static void _onWiFiAPStart(WiFiEvent_t event, WiFiEventInfo_t info);
         static void _onWiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info);
+        static void _onWiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info);
 
         // Handler for client password checking
         static bool _checkPassword(AsyncWebServerRequest *request);

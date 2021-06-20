@@ -14,7 +14,7 @@
 /* Public Methods
 /******************************************************************************/
 
-// Turn the beacon off
+// Turn the beacon off and reset state
 void Junkbotix_Beacons::off() {
     ledcWrite(_channel, 0);
 }
@@ -40,7 +40,18 @@ bool Junkbotix_Beacons::isPaused() {
  * @param style Junkbotix_Beacon_Style style object defining the style for the beacon
  */
 void Junkbotix_Beacons::tick(Junkbotix_Beacon_Style style) {
+    // Re-initialize beacon state machine settings if a new style is used
+    if (style.getName() != _style.getName()) {
+        _curr_state = BEACON_INIT;
+        _next_state = BEACON_INIT;
+        _lastMillis = 0;
+              _reps = 0;
+               _pwm = 0;
+             _delay = 0;
+    }
+
     _style = style;
+    
     tick();
 }
 

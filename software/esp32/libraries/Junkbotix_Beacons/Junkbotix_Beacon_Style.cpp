@@ -14,6 +14,15 @@
 /******************************************************************************/
 
 /**
+ * Set the name for the beacon style
+ * 
+ * @param name Name of the style
+ */
+void Junkbotix_Beacon_Style::setName(String name) { 
+    _name = name;
+}
+
+/**
  * Set the number of repeated beacon actions per cycle for the beacon style
  * 
  * @param repeat Number of times to repeat actions per cycle
@@ -65,6 +74,11 @@ void Junkbotix_Beacon_Style::setPauseDelay(unsigned int pausedelay) {
  */
 void Junkbotix_Beacon_Style::setOneshot(bool oneshot = false) { 
     _oneshot = oneshot;
+}
+
+// Return the assigned name for the beacon style
+String Junkbotix_Beacon_Style::getName() {
+    return _name;
 }
 
 // Return the number of repeated beacon actions per cycle for the beacon style

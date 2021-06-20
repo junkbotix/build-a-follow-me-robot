@@ -41,13 +41,18 @@ void setup() {
     // Initialize hardware serial port
     Serial.begin(115200);
 
+    // Set up the "blinking" beacon style object
+    BlinkBeaconStyle.setName("blink");
+
     // Set up the "flashing" beacon style object
+    FlashBeaconStyle.setName("flash");
     FlashBeaconStyle.setRepeat(2);
     FlashBeaconStyle.setOnDelay(75);
     FlashBeaconStyle.setOffDelay(500);
     FlashBeaconStyle.setPauseDelay(1000);
 
     // Set up the "breathing" beacon style object
+    BreathBeaconStyle.setName("breath");
     BreathBeaconStyle.setStep(1);
     BreathBeaconStyle.setOnDelay(5);
     BreathBeaconStyle.setOffDelay(5);
@@ -64,7 +69,7 @@ void loop() {
                 AudibleBeacon.tick(FlashBeaconStyle);
                 
                 if (VisibleBeacon.isPaused() && AudibleBeacon.isPaused()) {
-                    Serial.println("gps ready");
+                    Serial.println("GPS ready...");
                     FMRobot.setState(INIT_WEB_SERVER);
                 }
             } else {
@@ -94,6 +99,7 @@ void loop() {
             // When a client (station) connects to the AP, flash/beep beacons 2x
             VisibleBeacon.tick(FlashBeaconStyle);
             AudibleBeacon.tick(FlashBeaconStyle);
+
             if (VisibleBeacon.isPaused() && AudibleBeacon.isPaused()) {
                 FMRobot.setState(RESET_BEACONS);
             }
@@ -111,8 +117,8 @@ void loop() {
         case CHECK_CLIENT_ESTOP:
             // By default, we need to get the client's last reported position
             FMRobot.setState(GET_CLIENT_GEO_POSITION);
-            // But if an E-STOP request occurred, set a state to halt everything
-            if (FMWebserver.isEStopped()) FMRobot.setState(HCF_HALT);
+            // But if an E-STOP request occurred, set a state to initialize full halt mode
+            if (FMWebserver.isEStopped()) FMRobot.setState(INIT_HCF_HALT);
             break;
         
         case GET_CLIENT_GEO_POSITION:
@@ -168,6 +174,12 @@ void loop() {
             FMRobot.setState(CHECK_CLIENT_ESTOP);
             break;
 
+        case INIT_HCF_HALT:
+            // Set a message back to client that halting has occurred, then HALT
+            FMWebserver.setClientMessage("!!! E-STOP - HALTED !!!");
+            FMRobot.setState(HCF_HALT);
+            break;
+
         case HCF_HALT:
             // Break statement purposefully omitted...
 
@@ -176,7 +188,6 @@ void loop() {
             If halting, or anything that doesn't match a previously defined 
             state, halt all robot operations
             */
-            FMWebserver.setClientMessage("!!! E-STOP - HALTED !!!");
             FMRobot.halt();
             VisibleBeacon.tick(BlinkBeaconStyle);
 

@@ -39,18 +39,19 @@ bool Junkbotix_Webserver::_isEStopped;   // Set to true when emergency stop requ
 
 // Handler for checking client password against defined credentials
 bool Junkbotix_Webserver::_checkPassword(AsyncWebServerRequest *request) {
-    if (request->getParam("password")->value() != CLIENT_PASSWORD) {
-        request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "Invalid client password received...");    
-        return false;
+    if (request->hasParam("pwd")) {
+        if (request->getParam("pwd")->value() == CLIENT_PASSWORD) {
+            return true;
+        }
     }
 
-    return true;
+    Serial.println("Invalid client password received...");    
+    return false;
 }
 
 // Request handler for the index page
 void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
     Serial.println("Handling request for index page...");
-    Serial.println("");
     request->send_P(AS_WEBSERVER_RESPONSE_OK, "text/html", index_html);    
 }
 
@@ -58,21 +59,19 @@ void Junkbotix_Webserver::_onIndexReq(AsyncWebServerRequest *request) {
 void Junkbotix_Webserver::_onGetMessageReq(AsyncWebServerRequest *request) {
     if (_checkPassword(request)) {
         Serial.println("Handling request for client message...");
-        Serial.println("");
 
         if (_clientMessage != _lastClientMessage) {
             request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", _clientMessage);
-        } else {
-            request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "");
-        }   
+        }
     }
 }
 
 // Request handler for the client's reporting of geolocation coordinates
 void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
+    if (_isEStopped) return;
+
     if (_checkPassword(request)) {
         Serial.println("Handling request for client geolocation...");
-        Serial.println("");
 
         _lastClientPosition.latitude = request->arg("lat").toFloat();
         _lastClientPosition.longitude = request->arg("lon").toFloat();
@@ -86,18 +85,16 @@ void Junkbotix_Webserver::_onGeoLocationReq(AsyncWebServerRequest *request) {
 void Junkbotix_Webserver::_onEStopReq(AsyncWebServerRequest *request) {
     if (_checkPassword(request)) {
         Serial.println("Handling request for E-STOP...");
-        Serial.println("");
+       
+        request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "Client E-STOP request initiated...");    
 
         _isEStopped = true;
-        
-        request->send(AS_WEBSERVER_RESPONSE_OK, "text/plain", "Client E-STOP request initiated...");    
     }
 }
 
 // Request handler for an unknown request
 void Junkbotix_Webserver::_onNotFoundReq(AsyncWebServerRequest *request) {
     Serial.println("Handling unknown request...");
-    Serial.println("");
     request->send_P(AS_WEBSERVER_RESPONSE_NOTFOUND, "text/html", e404_html);
 }
 
@@ -105,8 +102,9 @@ void Junkbotix_Webserver::_onNotFoundReq(AsyncWebServerRequest *request) {
 void Junkbotix_Webserver::_onWiFiAPStart(WiFiEvent_t event, WiFiEventInfo_t info) {
     WiFi.softAPConfig(_localip, _gateway, _subnet);
     
-    Serial.println("SoftAP configured and waiting for station...");
-    Serial.println("");
+    Serial.print("SoftAP configured and waiting. Connect to AP SSID [");
+    Serial.print(_ssid);
+    Serial.println("]");
 
     _isAPStarted = true;
 }
@@ -135,10 +133,7 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
     // Give some help to the user
     Serial.println("Junkbotix FMRobot Webserver started...");
     Serial.println("");
-    Serial.print("Connect to AP SSID ");
-    Serial.println(_ssid);
-    Serial.println("");
-    Serial.print("...then browse to: http://");
+    Serial.print("Browse to: http://");
     Serial.print(WiFi.softAPIP());
     Serial.print(":");
     Serial.print(AS_WEBSERVER_PORT);
@@ -146,6 +141,16 @@ void Junkbotix_Webserver::_onWiFiStationConnected(WiFiEvent_t event, WiFiEventIn
     Serial.println("");    
 
     _isConnected = true;
+}
+
+/**
+ * Once the wifi SoftAP has a connection, it will look for any
+ * disconnection. If that occurs, a handler calls this function
+ */
+void Junkbotix_Webserver::_onWiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info) {
+    Serial.println("Station disconnected...");
+
+    _isConnected = false;
 }
 
 /******************************************************************************/
@@ -193,17 +198,15 @@ void Junkbotix_Webserver::setAddresses(String localip, String gateway, String su
 
 // Initialize the SoftAP and Async Webserver
 void Junkbotix_Webserver::init() {
-
     // Initialize and instantiate the SoftAP
-    Serial.println("");
     Serial.println("Starting SoftAP...");
-    Serial.println("");
 
     WiFi.softAP(_ssid, _password);
 
     // Handlers for the SoftAP startup and station connection
     WiFi.onEvent(_onWiFiAPStart, SYSTEM_EVENT_AP_START);
     WiFi.onEvent(_onWiFiStationConnected, SYSTEM_EVENT_AP_STACONNECTED);
+    WiFi.onEvent(_onWiFiStationDisconnected, SYSTEM_EVENT_AP_STADISCONNECTED);
 }
 
 Junkbotix_Webserver::Junkbotix_Webserver() {
